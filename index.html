@@ -1,0 +1,2807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Programming Hub 2025</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --primary-black: #0a0a0a;
+            --secondary-black: #1a1a1a;
+            --dark-gray: #2a2a2a;
+            --medium-gray: #3a3a3a;
+            --light-gray: #4a4a4a;
+            --text-gray: #b0b0b0;
+            --light-text: #e0e0e0;
+            --white: #ffffff;
+            --primary-purple: #8b5cf6;
+            --light-purple: #a78bfa;
+            --dark-purple: #7c3aed;
+            --primary-blue: #3b82f6;
+            --light-blue: #60a5fa;
+            --dark-blue: #2563eb;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --gradient-primary: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-blue) 100%);
+            --glow-purple: 0 0 20px rgba(139, 92, 246, 0.3);
+            --glow-blue: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-black);
+            color: var(--light-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== ANIMATED BACKGROUND ===== */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--primary-black);
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+            animation: backgroundPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--dark-gray);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--light-purple);
+            background: rgba(139, 92, 246, 0.1);
+            box-shadow: var(--glow-purple);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5)); }
+            100% { filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.8)); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .cta-button {
+            padding: 15px 35px;
+            background: var(--gradient-primary);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: var(--glow-purple);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--primary-purple);
+            color: var(--light-purple);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--primary-purple);
+            color: white;
+        }
+
+        /* ===== TERMINAL SECTION ===== */
+        .terminal-section {
+            margin: 60px auto;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .terminal {
+            background: var(--secondary-black);
+            border-radius: 12px;
+            border: 1px solid var(--dark-gray);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: var(--dark-gray);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-button.close { background: var(--accent-red); }
+        .terminal-button.minimize { background: var(--accent-orange); }
+        .terminal-button.maximize { background: var(--accent-green); }
+
+        .terminal-title {
+            margin-left: 15px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            min-height: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .terminal-prompt {
+            color: var(--accent-green);
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .terminal-command {
+            color: var(--light-blue);
+        }
+
+        .terminal-output {
+            color: var(--text-gray);
+            white-space: pre-wrap;
+            word-break: break-word;
+            width: 100%;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .terminal-input {
+            background: transparent;
+            border: none;
+            color: var(--light-text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            outline: none;
+            flex: 1;
+            margin-left: 8px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: var(--light-purple);
+            animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* ===== SECTION STYLES ===== */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section.alt {
+            background: var(--secondary-black);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        /* ===== COMPUTER HISTORY SECTION ===== */
+        .computer-timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .central-computer {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 60px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--glow-purple);
+        }
+
+        .central-computer:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
+        }
+
+        .computer-icon {
+            font-size: 4rem;
+            color: white;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .timeline-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .timeline-item {
+            background: var(--secondary-black);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid var(--dark-gray);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-purple);
+            box-shadow: var(--glow-purple);
+        }
+
+        .timeline-year {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light-purple);
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+
+        .timeline-description {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* ===== PROGRAMMING LANGUAGES GRID ===== */
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .language-card {
+            background: var(--primary-black);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--dark-gray);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .language-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .language-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .language-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-purple);
+            box-shadow: var(--glow-purple);
+        }
+
+        .language-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .language-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-weight: 700;
+            color: white;
+            font-size: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .python-icon { background: linear-gradient(135deg, #3776AB 0%, #FFD43B 100%); }
+        .javascript-icon { background: linear-gradient(135deg, #F7DF1E 0%, #F0DB4F 100%); color: #323330; }
+        .typescript-icon { background: linear-gradient(135deg, #3178C6 0%, #235A97 100%); }
+        .rust-icon { background: linear-gradient(135deg, #CE422B 0%, #8B4513 100%); }
+        .go-icon { background: linear-gradient(135deg, #00ADD8 0%, #007D9C 100%); }
+        .kotlin-icon { background: linear-gradient(135deg, #7F52FF 0%, #0095D5 100%); }
+
+        .language-info h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--light-text);
+            margin-bottom: 5px;
+        }
+
+        .language-year {
+            color: var(--light-purple);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .language-description {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .language-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .feature-tag {
+            background: var(--dark-gray);
+            color: var(--light-purple);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid var(--primary-purple);
+        }
+
+        .language-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 15px;
+            background: var(--dark-gray);
+            border-radius: 10px;
+            border: 1px solid var(--medium-gray);
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--light-blue);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== SOFTWARE GRID ===== */
+        .software-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .software-card {
+            background: var(--secondary-black);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid var(--dark-gray);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .software-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--light-blue);
+            box-shadow: var(--glow-blue);
+        }
+
+        .software-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .software-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: 600;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .vscode-icon { background: linear-gradient(135deg, #007ACC 0%, #0066B2 100%); }
+        .git-icon { background: linear-gradient(135deg, #F05032 0%, #E44C30 100%); }
+        .docker-icon { background: linear-gradient(135deg, #2496ED 0%, #0DB7ED 100%); }
+        .figma-icon { background: linear-gradient(135deg, #F24E1E 0%, #A259FF 100%); }
+        .notion-icon { background: linear-gradient(135deg, #000000 0%, #434343 100%); }
+        .slack-icon { background: linear-gradient(135deg, #4A154B 0%, #350d36 100%); }
+
+        /* New OS Icons */
+        .linux-icon { background: linear-gradient(135deg, #FCC624 0%, #E0AC00 100%); color: #000; }
+        .windows-icon { background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%); }
+        .macos-icon { background: linear-gradient(135deg, #A2A2A2 0%, #7F7F7F 100%); }
+
+        .software-info h4 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--light-text);
+            margin-bottom: 5px;
+        }
+
+        .software-category {
+            color: var(--light-blue);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .software-description {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-top: 10px;
+        }
+
+        /* ===== CAREER PATHS GRID ===== */
+        .career-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .career-card {
+            background: var(--primary-black);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--dark-gray);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .career-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .career-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .career-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-blue);
+            box-shadow: var(--glow-blue);
+        }
+
+        .career-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: white;
+            background: var(--gradient-primary);
+        }
+
+        .career-card h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+
+        .career-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .career-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .skill-tag {
+            background: var(--dark-gray);
+            color: var(--light-blue);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid var(--primary-blue);
+        }
+
+        .career-salary {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            margin-top: 15px;
+        }
+
+        /* ===== PROJECT IDEAS GRID ===== */
+        .project-ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--secondary-black);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--dark-gray);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .project-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-purple);
+            box-shadow: var(--glow-purple);
+        }
+
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            color: white;
+            background: var(--primary-purple);
+        }
+
+        .project-card h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .project-tag {
+            background: var(--dark-gray);
+            color: var(--light-purple);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid var(--primary-purple);
+        }
+
+        /* ===== MODAL STYLES ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--secondary-black);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px; /* Increased max-width for more content */
+            width: 90%;
+            max-height: 85vh; /* Increased max-height */
+            overflow-y: auto;
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s ease;
+            border: 1px solid var(--dark-gray);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--light-text);
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--light-text);
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-content {
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        .modal-content h3 {
+            color: var(--light-text);
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
+        }
+
+        .modal-content ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .modal-content li {
+            margin-bottom: 8px;
+            color: var(--text-gray);
+        }
+
+        .modal-content strong {
+            color: var(--light-text);
+        }
+
+        .modal-content .salary-range {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--accent-green);
+            margin-top: 10px;
+            display: block;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--primary-black);
+            color: var(--text-gray);
+            padding: 80px 0 40px;
+            text-align: center;
+            border-top: 1px solid var(--dark-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            text-align: left;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light-text);
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-column p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--light-purple);
+        }
+
+        .footer-social-icons {
+            display: flex;
+            flex-direction: column; /* Stack vertically */
+            gap: 10px; /* Reduced gap */
+            margin-top: 20px;
+        }
+
+        .footer-social-icons a, .footer-social-icons span {
+            color: var(--text-gray);
+            font-size: 1rem; /* Smaller font size for text links */
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-social-icons a:hover, .footer-social-icons span:hover {
+            color: var(--light-blue);
+            transform: translateX(5px); /* Slight slide effect */
+        }
+
+        .footer-social-icons .icon {
+            font-size: 1.2rem; /* Icon size */
+        }
+
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--dark-gray);
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-bottom p {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .footer-bottom .logo {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .footer-column {
+                min-width: unset;
+                width: 100%;
+                max-width: 500px;
+            }
+            .footer-social-icons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .languages-grid,
+            .software-grid,
+            .timeline-items,
+            .career-grid,
+            .project-ideas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+
+            .central-computer {
+                width: 200px;
+                height: 200px;
+            }
+
+            .computer-icon {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.6s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">PROG.HUB 2025</div>
+            <ul class="nav-links">
+                <li><a onclick="scrollToSection('home')">Home</a></li>
+                <li><a onclick="openModal('shortLinksModal')">Short Links</a></li> <!-- New Short Links button -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">INTERACTIVE PROGRAMMING HUB 2025</h1>
+            <p class="hero-subtitle">Explore the complete world of programming with interactive terminals, computer history, modern languages, and cutting-edge software. Your ultimate guide to mastering development in 2025.</p>
+            <div class="hero-buttons">
+                <button class="cta-button" onclick="scrollToSection('terminal')">Launch Terminal</button>
+                <button class="cta-button secondary" onclick="scrollToSection('history')">Explore History</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== INTERACTIVE TERMINAL SECTION ===== -->
+    <section id="terminal" class="terminal-section">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-button close"></div>
+                <div class="terminal-button minimize"></div>
+                <div class="terminal-button maximize"></div>
+                <div class="terminal-title">programmer@hub2025:~$</div>
+            </div>
+            <div class="terminal-body" id="terminalBody">
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command">welcome</span>
+                </div>
+                <div class="terminal-line">
+                    <div class="terminal-output">Welcome to Programming Hub 2025!
+Type 'help' to see available commands</div>
+                </div>
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt">$</span>
+                    <input type="text" class="terminal-input" id="terminalInput" placeholder="Type a command..." autocomplete="off">
+                    <span class="cursor"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== COMPUTER HISTORY SECTION ===== -->
+    <section id="history" class="section">
+        <div class="container">
+            <h2 class="section-title">The Story of Computing</h2>
+            <p class="section-subtitle">From mechanical calculators to quantum computers - explore the fascinating evolution of computing technology that shaped our digital world.</p>
+            
+            <div class="computer-timeline">
+                <div class="central-computer" onclick="openModal('computerStoryModal')">
+                    <div class="computer-icon">💻</div>
+                </div>
+                
+                <div class="timeline-items">
+                    <div class="timeline-item fade-in" onclick="showTimelineInfo('ENIAC - 1946', 'The first general-purpose electronic digital computer. ENIAC weighed 30 tons, filled an entire room, and could perform 5,000 additions per second. It used 18,000 vacuum tubes and consumed 150 kilowatts of power. It was primarily used for calculating artillery firing tables for the U.S. Army.')">
+                        <div class="timeline-year">1946</div>
+                        <h3 class="timeline-title">ENIAC</h3>
+                        <p class="timeline-description">The first general-purpose electronic digital computer. Weighed 30 tons and filled an entire room.</p>
+                    </div>
+                    
+                    <div class="timeline-item fade-in" onclick="showTimelineInfo('Transistor - 1947', 'Bell Labs invented the transistor, revolutionizing electronics forever. This tiny device replaced bulky vacuum tubes and made modern computers possible. The transistor is considered one of the most important inventions of the 20th century, leading to miniaturization and increased efficiency in electronic devices.')">
+                        <div class="timeline-year">1947</div>
+                        <h3 class="timeline-title">Transistor Invented</h3>
+                        <p class="timeline-description">Bell Labs invented the transistor, revolutionizing electronics and making modern computers possible.</p>
+                    </div>
+                    
+                    <div class="timeline-item fade-in" onclick="showTimelineInfo('ARPANET - 1969', 'The Advanced Research Projects Agency Network was the precursor to the internet. It connected four universities: UCLA, Stanford, UCSB, and University of Utah. The first message sent was LOGIN but crashed after LO. This laid the foundational principles for packet switching and distributed networks.')">
+                        <div class="timeline-year">1969</div>
+                        <h3 class="timeline-title">ARPANET</h3>
+                        <p class="timeline-description">The precursor to the internet, connecting four universities and changing communication forever.</p>
+                    </div>
+                    
+                    <div class="timeline-item fade-in" onclick="showTimelineInfo('IBM PC - 1981', 'IBM launched the Personal Computer, making computing accessible to businesses and homes. It used an Intel 8088 processor, had 16KB of RAM, and cost $1,565. This standardized the PC architecture we still use today, fostering a massive software industry.')">
+                        <div class="timeline-year">1981</div>
+                        <h3 class="timeline-title">IBM PC</h3>
+                        <p class="timeline-description">IBM launched the Personal Computer, making computing accessible to businesses and homes.</p>
+                    </div>
+                    
+                    <div class="timeline-item fade-in" onclick="showTimelineInfo('World Wide Web - 1991', 'Tim Berners-Lee created the World Wide Web at CERN. He invented HTML, HTTP, URLs, and the first web browser. The first website was info.cern.ch and explained what the Web was. This open standard democratized information access globally.')">
+                        <div class="timeline-year">1991</div>
+                        <h3 class="timeline-title">World Wide Web</h3>
+                        <p class="timeline-description">Tim Berners-Lee created the Web, transforming how we share and access information.</p>
+                    </div>
+                    
+                    <div class="timeline-item fade-in" onclick="showTimelineInfo('iPhone Launch - 2007', 'Apple revolutionized mobile computing with the iPhone. It combined a phone, iPod, and internet device into one. The iPhone introduced multi-touch interfaces and mobile apps, putting powerful computers in everyones pocket. This ushered in the smartphone era and mobile-first development.')">
+                        <div class="timeline-year">2007</div>
+                        <h3 class="timeline-title">iPhone Launch</h3>
+                        <p class="timeline-description">Apple revolutionized mobile computing, putting powerful computers in everyone's pocket.</p>
+                    </div>
+                    
+                    <div class="timeline-item fade-in" onclick="showTimelineInfo('AI Revolution - 2022', 'ChatGPT and large language models brought AI to mainstream. OpenAI released ChatGPT in November 2022, reaching 100 million users in just 2 months. This sparked the current AI revolution changing how we work and create, impacting industries from healthcare to finance.')">
+                        <div class="timeline-year">2022</div>
+                        <h3 class="timeline-title">AI Revolution</h3>
+                        <p class="timeline-description">ChatGPT and large language models brought AI to mainstream, changing how we work and create.</p>
+                    </div>
+                    
+                    <div class="timeline-item fade-in" onclick="showTimelineInfo('Quantum Era - 2025', 'Quantum computing becomes practical for solving real-world problems. Companies like IBM, Google, and others are developing quantum computers that can solve problems impossible for classical computers, from drug discovery to cryptography. This era promises exponential leaps in computational power.')">
+                        <div class="timeline-year">2025</div>
+                        <h3 class="timeline-title">Quantum Era</h3>
+                        <p class="timeline-description">Quantum computing becomes practical, promising to solve previously impossible problems.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROGRAMMING LANGUAGES SECTION ===== -->
+    <section id="languages" class="section alt">
+        <div class="container">
+            <h2 class="section-title">Modern Programming Languages 2025</h2>
+            <p class="section-subtitle">Master the most important and trending programming languages that are shaping the future of software development.</p>
+            
+            <div class="languages-grid">
+                <div class="language-card fade-in" onclick="openModal('pythonModal')">
+                    <div class="language-header">
+                        <div class="language-icon python-icon">Py</div>
+                        <div class="language-info">
+                            <h3>Python</h3>
+                            <div class="language-year">Created 1991 • Trending #1</div>
+                        </div>
+                    </div>
+                    <p class="language-description">The king of programming languages in 2025. Python dominates AI, data science, web development, and automation. Its simplicity and powerful libraries make it perfect for beginners and experts alike.</p>
+                    <div class="language-features">
+                        <span class="feature-tag">AI/ML</span>
+                        <span class="feature-tag">Data Science</span>
+                        <span class="feature-tag">Web Development</span>
+                        <span class="feature-tag">Automation</span>
+                        <span class="feature-tag">Scientific Computing</span>
+                    </div>
+                    <div class="language-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">98%</span>
+                            <span class="stat-label">Popularity</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">95%</span>
+                            <span class="stat-label">Beginner Friendly</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">99%</span>
+                            <span class="stat-label">Job Market</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="language-card fade-in" onclick="openModal('javascriptModal')">
+                    <div class="language-header">
+                        <div class="language-icon javascript-icon">JS</div>
+                        <div class="language-info">
+                            <h3>JavaScript</h3>
+                            <div class="language-year">Created 1995 • Essential</div>
+                        </div>
+                    </div>
+                    <p class="language-description">The universal language of the web and beyond. JavaScript runs everywhere - browsers, servers, mobile apps, desktop applications, and even IoT devices. Essential for any developer in 2025.</p>
+                    <div class="language-features">
+                        <span class="feature-tag">Frontend</span>
+                        <span class="feature-tag">Backend</span>
+                        <span class="feature-tag">Mobile Apps</span>
+                        <span class="feature-tag">Desktop Apps</span>
+                        <span class="feature-tag">Full-Stack</span>
+                    </div>
+                    <div class="language-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">97%</span>
+                            <span class="stat-label">Popularity</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">88%</span>
+                            <span class="stat-label">Beginner Friendly</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">99%</span>
+                            <span class="stat-label">Job Market</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="language-card fade-in" onclick="openModal('typescriptModal')">
+                    <div class="language-header">
+                        <div class="language-icon typescript-icon">TS</div>
+                        <div class="language-info">
+                            <h3>TypeScript</h3>
+                            <div class="language-year">Created 2012 • Rising Fast</div>
+                        </div>
+                    </div>
+                    <p class="language-description">JavaScript with superpowers! TypeScript adds static typing and modern features to JavaScript. It's becoming the standard for large-scale applications and enterprise development in 2025.</p>
+                    <div class="language-features">
+                        <span class="feature-tag">Type Safety</span>
+                        <span class="feature-tag">Large Projects</span>
+                        <span class="feature-tag">Better IDE Support</span>
+                        <span class="feature-tag">Enterprise</span>
+                        <span class="feature-tag">Modern JS</span>
+                    </div>
+                    <div class="language-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">94%</span>
+                            <span class="stat-label">Popularity</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">82%</span>
+                            <span class="stat-label">Beginner Friendly</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">96%</span>
+                            <span class="stat-label">Job Market</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="language-card fade-in" onclick="openModal('rustModal')">
+                    <div class="language-header">
+                        <div class="language-icon rust-icon">Rs</div>
+                        <div class="language-info">
+                            <h3>Rust</h3>
+                            <div class="language-year">Created 2010 • Hot Trend</div>
+                        </div>
+                    </div>
+                    <p class="language-description">The future of systems programming! Rust offers memory safety without garbage collection, making it perfect for performance-critical applications. It's rapidly gaining adoption in 2025.</p>
+                    <div class="language-features">
+                        <span class="feature-tag">Memory Safety</span>
+                        <span class="feature-tag">Performance</span>
+                        <span class="feature-tag">Systems Programming</span>
+                        <span class="feature-tag">Web Assembly</span>
+                        <span class="feature-tag">Blockchain</span>
+                    </div>
+                    <div class="language-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">89%</span>
+                            <span class="stat-label">Popularity</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">65%</span>
+                            <span class="stat-label">Beginner Friendly</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">92%</span>
+                            <span class="stat-label">Job Market</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="language-card fade-in" onclick="openModal('goModal')">
+                    <div class="language-header">
+                        <div class="language-icon go-icon">Go</div>
+                        <div class="language-info">
+                            <h3>Go (Golang)</h3>
+                            <div class="language-year">Created 2009 • Cloud Native</div>
+                        </div>
+                    </div>
+                    <p class="language-description">Google's language for the cloud era. Go excels at building scalable backend services, microservices, and cloud-native applications. Perfect for modern distributed systems.</p>
+                    <div class="language-features">
+                        <span class="feature-tag">Cloud Native</span>
+                        <span class="feature-tag">Microservices</span>
+                        <span class="feature-tag">Concurrency</span>
+                        <span class="feature-tag">Fast Compilation</span>
+                        <span class="feature-tag">DevOps Tools</span>
+                    </div>
+                    <div class="language-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">87%</span>
+                            <span class="stat-label">Popularity</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">85%</span>
+                            <span class="stat-label">Beginner Friendly</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">91%</span>
+                            <span class="stat-label">Job Market</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="language-card fade-in" onclick="openModal('kotlinModal')">
+                    <div class="language-header">
+                        <div class="language-icon kotlin-icon">Kt</div>
+                        <div class="language-info">
+                            <h3>Kotlin</h3>
+                            <div class="language-year">Created 2011 • Android First</div>
+                        </div>
+                    </div>
+                    <p class="language-description">Google's preferred language for Android development. Kotlin is modern, concise, and 100% interoperable with Java. It's also expanding to multiplatform development.</p>
+                    <div class="language-features">
+                        <span class="feature-tag">Android</span>
+                        <span class="feature-tag">Multiplatform</span>
+                        <span class="feature-tag">Java Interop</span>
+                        <span class="feature-tag">Concise Syntax</span>
+                        <span class="feature-tag">Null Safety</span>
+                    </div>
+                    <div class="language-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">85%</span>
+                            <span class="stat-label">Popularity</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">80%</span>
+                            <span class="stat-label">Beginner Friendly</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">88%</span>
+                            <span class="stat-label">Job Market</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SOFTWARE & TOOLS SECTION ===== -->
+    <section id="software" class="section">
+        <div class="container">
+            <h2 class="section-title">Essential Software & Tools 2025</h2>
+            <p class="section-subtitle">The complete toolkit for modern developers. From code editors to design tools, these applications power the development workflow.</p>
+            
+            <div class="software-grid">
+                <div class="software-card slide-in-left" onclick="openModal('vscodeModal')">
+                    <div class="software-header">
+                        <div class="software-icon vscode-icon">VS</div>
+                        <div class="software-info">
+                            <h4>Visual Studio Code</h4>
+                            <div class="software-category">Code Editor • Free</div>
+                        </div>
+                    </div>
+                    <p class="software-description">The most popular code editor in 2025. VS Code offers incredible extensions, integrated terminal, debugging, Git integration, and AI-powered coding assistance.</p>
+                </div>
+
+                <div class="software-card slide-in-right" onclick="openModal('gitModal')">
+                    <div class="software-header">
+                        <div class="software-icon git-icon">Git</div>
+                        <div class="software-info">
+                            <h4>Git & GitHub</h4>
+                            <div class="software-category">Version Control • Essential</div>
+                        </div>
+                    </div>
+                    <p class="software-description">Essential version control system used by every professional developer. GitHub provides hosting, collaboration, and CI/CD features for modern development workflows.</p>
+                </div>
+
+                <div class="software-card slide-in-left" onclick="openModal('dockerModal')">
+                    <div class="software-header">
+                        <div class="software-icon docker-icon">🐳</div>
+                        <div class="software-info">
+                            <h4>Docker</h4>
+                            <div class="software-category">Containerization • DevOps</div>
+                        </div>
+                    </div>
+                    <p class="software-description">Containerize applications for consistent deployment across environments. Docker simplifies development, testing, and deployment in cloud-native architectures.</p>
+                </div>
+
+                <div class="software-card slide-in-right" onclick="openModal('figmaModal')">
+                    <div class="software-header">
+                        <div class="software-icon figma-icon">Fi</div>
+                        <div class="software-info">
+                            <h4>Figma</h4>
+                            <div class="software-category">Design Tool • Collaborative</div>
+                        </div>
+                    </div>
+                    <p class="software-description">The leading design tool for UI/UX design and prototyping. Figma enables real-time collaboration between designers and developers with powerful design systems.</p>
+                </div>
+
+                <div class="software-card slide-in-left" onclick="openModal('notionModal')">
+                    <div class="software-header">
+                        <div class="software-icon notion-icon">N</div>
+                        <div class="software-info">
+                            <h4>Notion</h4>
+                            <div class="software-category">Productivity • Documentation</div>
+                        </div>
+                    </div>
+                    <p class="software-description">All-in-one workspace for notes, documentation, project management, and team collaboration. Perfect for organizing development projects and knowledge.</p>
+                </div>
+
+                <div class="software-card slide-in-right" onclick="openModal('slackModal')">
+                    <div class="software-header">
+                        <div class="software-icon slack-icon">S</div>
+                        <div class="software-info">
+                            <h4>Slack</h4>
+                            <div class="software-category">Communication • Team Collaboration</div>
+                        </div>
+                    </div>
+                    <p class="software-description">Essential team communication platform with channels, direct messaging, file sharing, and integrations with development tools and services.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== OPERATING SYSTEMS SECTION ===== -->
+    <section id="operating-systems" class="section alt">
+        <div class="container">
+            <h2 class="section-title">Operating Systems for Developers</h2>
+            <p class="section-subtitle">The foundation of your development environment. Choose the OS that best fits your workflow and project needs.</p>
+            
+            <div class="software-grid"> <!-- Reusing software-grid for similar card layout -->
+                <div class="software-card slide-in-left" onclick="openModal('linuxModal')">
+                    <div class="software-header">
+                        <div class="software-icon linux-icon">🐧</div>
+                        <div class="software-info">
+                            <h4>Linux (Arch, Ubuntu, Fedora)</h4>
+                            <div class="software-category">Open Source • Power User</div>
+                        </div>
+                    </div>
+                    <p class="software-description">The preferred OS for many developers, offering unparalleled customization, powerful command-line tools, and a robust environment for server-side and open-source development.</p>
+                </div>
+
+                <div class="software-card slide-in-right" onclick="openModal('windowsModal')">
+                    <div class="software-header">
+                        <div class="software-icon windows-icon">🪟</div>
+                        <div class="software-info">
+                            <h4>Windows (WSL)</h4>
+                            <div class="software-category">Versatile • Gaming & Dev</div>
+                        </div>
+                    </div>
+                    <p class="software-description">The most widely used desktop OS, now with WSL (Windows Subsystem for Linux) offering a powerful Linux environment directly within Windows, making it highly capable for development.</p>
+                </div>
+
+                <div class="software-card slide-in-left" onclick="openModal('macosModal')">
+                    <div class="software-header">
+                        <div class="software-icon macos-icon">🍎</div>
+                        <div class="software-info">
+                            <h4>macOS</h4>
+                            <div class="software-category">Unix-based • Design & Dev</div>
+                        </div>
+                    </div>
+                    <p class="software-description">Popular among designers and developers for its Unix-based foundation, elegant UI, and strong support for creative and development tools, especially for iOS/macOS app development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CAREER PATHS SECTION ===== -->
+    <section id="careers" class="section">
+        <div class="container">
+            <h2 class="section-title">Developer Career Paths 2025</h2>
+            <p class="section-subtitle">Explore the diverse and rewarding career opportunities in software development, from crafting user interfaces to building robust backend systems.</p>
+            
+            <div class="career-grid">
+                <div class="career-card fade-in" onclick="openModal('frontendDevModal')">
+                    <div class="career-icon">🎨</div>
+                    <h3>Frontend Developer</h3>
+                    <p>Specializes in the user-facing part of websites and applications. Focuses on creating engaging, responsive, and intuitive user interfaces.</p>
+                    <div class="career-skills">
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React/Vue/Angular</span>
+                        <span class="skill-tag">UI/UX</span>
+                    </div>
+                    <div class="career-salary">Avg. Salary: $90k - $160k+</div>
+                </div>
+
+                <div class="career-card fade-in" onclick="openModal('backendDevModal')">
+                    <div class="career-icon">⚙️</div>
+                    <h3>Backend Developer</h3>
+                    <p>Builds and maintains the server-side logic, databases, and APIs that power applications. Ensures data integrity, security, and performance.</p>
+                    <div class="career-skills">
+                        <span class="skill-tag">Node.js/Python/Go</span>
+                        <span class="skill-tag">Databases (SQL/NoSQL)</span>
+                        <span class="skill-tag">APIs (REST/GraphQL)</span>
+                        <span class="skill-tag">Cloud (AWS/Azure)</span>
+                        <span class="skill-tag">Security</span>
+                    </div>
+                    <div class="career-salary">Avg. Salary: $95k - $170k+</div>
+                </div>
+
+                <div class="career-card fade-in" onclick="openModal('fullstackDevModal')">
+                    <div class="career-icon">🚀</div>
+                    <h3>Full-Stack Developer</h3>
+                    <p>Proficient in both frontend and backend development, capable of handling all aspects of an application from user interface to server logic and database management.</p>
+                    <div class="career-skills">
+                        <span class="skill-tag">Frontend & Backend</span>
+                        <span class="skill-tag">Databases</span>
+                        <span class="skill-tag">DevOps Basics</span>
+                        <span class="skill-tag">Problem Solving</span>
+                        <span class="skill-tag">Architecture</span>
+                    </div>
+                    <div class="career-salary">Avg. Salary: $100k - $190k+</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECT IDEAS SECTION ===== -->
+    <section id="project-ideas" class="section alt">
+        <div class="container">
+            <h2 class="section-title">Project Ideas the World Needs</h2>
+            <p class="section-subtitle">Innovative project concepts that address real-world problems and leverage modern technologies. Find your next big idea!</p>
+            
+            <div class="project-ideas-grid">
+                <div class="project-card fade-in" onclick="openModal('aiHealthAssistantModal')">
+                    <div class="project-icon">🩺</div>
+                    <h3>AI-Powered Health Assistant</h3>
+                    <p>A personalized AI assistant for health management, offering proactive health advice, symptom analysis, and medication reminders.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">AI/ML</span>
+                        <span class="project-tag">Healthcare</span>
+                        <span class="project-tag">Mobile App</span>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in" onclick="openModal('sustainableSupplyChainModal')">
+                    <div class="project-icon">♻️</div>
+                    <h3>Blockchain for Sustainable Supply Chains</h3>
+                    <p>A transparent and traceable supply chain platform using blockchain to verify ethical sourcing and environmental impact of products.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Blockchain</span>
+                        <span class="project-tag">Sustainability</span>
+                        <span class="project-tag">Web Platform</span>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in" onclick="openModal('smartCityDashboardModal')">
+                    <div class="project-icon">🏙️</div>
+                    <h3>Smart City Data Dashboard</h3>
+                    <p>An interactive dashboard visualizing real-time urban data (traffic, air quality, energy usage) to help city planners make data-driven decisions.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">IoT</span>
+                        <span class="project-tag">Data Viz</span>
+                        <span class="project-tag">Urban Planning</span>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in" onclick="openModal('personalizedLearningModal')">
+                    <div class="project-icon">🧠</div>
+                    <h3>Adaptive Learning Platform</h3>
+                    <p>An AI-driven educational platform that adapts content and pace to individual student learning styles and progress, optimizing knowledge retention.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">EdTech</span>
+                        <span class="project-tag">AI/ML</span>
+                        <span class="project-tag">Personalization</span>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in" onclick="openModal('decentralizedSocialModal')">
+                    <div class="project-icon">🌐</div>
+                    <h3>Decentralized Social Network</h3>
+                    <p>A privacy-focused social media platform built on decentralized technologies, giving users full control over their data and content.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Web3</span>
+                        <span class="project-tag">Privacy</span>
+                        <span class="project-tag">Community</span>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in" onclick="openModal('climateActionPlatformModal')">
+                    <div class="project-icon">🌍</div>
+                    <h3>Gamified Climate Action Platform</h3>
+                    <p>An app that incentivizes sustainable behaviors through gamification, tracking environmental impact, and connecting users with local green initiatives.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Gamification</span>
+                        <span class="project-tag">Environment</span>
+                        <span class="project-tag">Community</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>PROG.HUB 2025</h3>
+                <p>Your ultimate interactive guide to modern programming. We aim to provide comprehensive, up-to-date information and tools for aspiring and experienced developers alike.</p>
+                <p>Stay curious, keep learning, and build the future.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a onclick="scrollToSection('home')">Home</a></li>
+                    <li><a onclick="scrollToSection('terminal')">Interactive Terminal</a></li>
+                    <li><a onclick="scrollToSection('history')">Computer History</a></li>
+                    <li><a onclick="scrollToSection('languages')">Programming Languages</a></li>
+                    <li><a onclick="scrollToSection('software')">Essential Software</a></li>
+                    <li><a onclick="scrollToSection('operating-systems')">Operating Systems</a></li>
+                    <li><a onclick="scrollToSection('careers')">Developer Careers</a></li>
+                    <li><a onclick="scrollToSection('project-ideas')">Project Ideas</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Connect With Me</h3> <!-- Changed "Us" to "Me" -->
+                <p>Follow my journey and connect with me for the latest updates and programming insights.</p>
+                <div class="footer-social-icons">
+                    <a href="https://github.com/pxxelina" target="_blank" aria-label="GitHub Profile"><span class="icon">🐙</span> pxxelina</a>
+                    <a href="mailto:linayassire00@gmail.com" aria-label="Email"><span class="icon">📧</span> linayassire00@gmail.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="logo">PROG.HUB 2025</div>
+            <p>&copy; 2025 Programming Hub. All rights reserved. Designed with passion for the future of code.</p>
+        </div>
+    </footer>
+
+    <!-- ===== MODAL OVERLAYS ===== -->
+    <div class="modal-overlay" id="shortLinksModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('shortLinksModal')">&times;</button>
+            <h2 class="modal-title">Quick Navigation</h2>
+            <div class="modal-content">
+                <ul>
+                    <li><a onclick="scrollToSection('home'); closeModal('shortLinksModal');">Home</a></li>
+                    <li><a onclick="scrollToSection('terminal'); closeModal('shortLinksModal');">Terminal</a></li>
+                    <li><a onclick="scrollToSection('history'); closeModal('shortLinksModal');">History</a></li>
+                    <li><a onclick="scrollToSection('languages'); closeModal('shortLinksModal');">Languages</a></li>
+                    <li><a onclick="scrollToSection('software'); closeModal('shortLinksModal');">Software</a></li>
+                    <li><a onclick="scrollToSection('operating-systems'); closeModal('shortLinksModal');">Operating Systems</a></li>
+                    <li><a onclick="scrollToSection('careers'); closeModal('shortLinksModal');">Careers</a></li>
+                    <li><a onclick="scrollToSection('project-ideas'); closeModal('shortLinksModal');">Project Ideas</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="computerStoryModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('computerStoryModal')">&times;</button>
+            <h2 class="modal-title">The Complete Story of Computing</h2>
+            <div class="modal-content">
+                <h3>From Mechanical to Quantum</h3>
+                <p>The journey of computing spans over 80 years, from room-sized mechanical calculators to quantum computers that can solve problems in seconds that would take classical computers millennia. This evolution has been driven by relentless innovation, miniaturization, and the increasing demand for processing power and connectivity.</p>
+                
+                <h3>Key Milestones & Eras</h3>
+                <ul>
+                    <li><strong>Early Computing (Pre-1940s):</strong> Mechanical calculators (Pascaline, Leibniz wheel), Analytical Engine (Babbage), punched cards (Hollerith). These laid the theoretical and mechanical groundwork.</li>
+                    <li><strong>First Electronic Computers (1940s):</strong> The birth of digital computing with machines like ENIAC (Electronic Numerical Integrator and Computer) and UNIVAC. These were massive, vacuum-tube-based machines primarily used for military and scientific calculations.</li>
+                    <li><strong>Transistor Revolution (1950s):</strong> The invention of the transistor at Bell Labs replaced bulky, heat-generating vacuum tubes, leading to smaller, faster, and more reliable computers. This was a pivotal moment for miniaturization.</li>
+                    <li><strong>Integrated Circuits & Minicomputers (1960s):</strong> Multiple transistors on a single chip further reduced size and cost. Minicomputers like the PDP-8 made computing accessible to smaller businesses and research labs.</li>
+                    <li><strong>Microprocessors & Personal Computers (1970s):</strong> The invention of the microprocessor (Intel 4004) led to the first personal computers (Apple I, Commodore PET, TRS-80). This democratized computing, moving it from mainframes to desktops.</li>
+                    <li><strong>GUI & Networking (1980s):</strong> The introduction of graphical user interfaces (GUIs) by Apple Macintosh and Microsoft Windows made computers user-friendly. The growth of local area networks (LANs) began connecting computers.</li>
+                    <li><strong>Internet & World Wide Web (1990s):</strong> Tim Berners-Lee's invention of the World Wide Web transformed information sharing. The rise of web browsers and search engines made the internet accessible to the masses, leading to the dot-com boom.</li>
+                    <li><strong>Mobile Computing & Social Media (2000s):</strong> The proliferation of mobile phones, followed by the revolutionary iPhone, put powerful computers in everyone's pocket. Social media platforms connected billions globally.</li>
+                    <li><strong>Cloud Computing & Big Data (2010s):</strong> Services like AWS, Azure, and Google Cloud enabled scalable, on-demand computing resources. The explosion of data led to advancements in big data analytics and distributed systems.</li>
+                    <li><strong>AI Revolution & Quantum Era (2020s-2025):</strong> Generative AI (ChatGPT, large language models) brought AI to the mainstream, transforming industries. Quantum computing is moving from theoretical to practical, promising to solve problems currently impossible for classical computers.</li>
+                </ul>
+                
+                <h3>The Future of Computing</h3>
+                <p>We're entering an era of unprecedented computational power. Expect further advancements in:</p>
+                <ul>
+                    <li><strong>Artificial General Intelligence (AGI):</strong> AI systems capable of human-level cognitive tasks.</li>
+                    <li><strong>Quantum Supremacy:</strong> Quantum computers solving problems beyond classical capabilities.</li>
+                    <li><strong>Brain-Computer Interfaces (BCI):</strong> Direct communication between the human brain and external devices.</li>
+                    <li><strong>Edge Computing:</strong> Processing data closer to the source, reducing latency.</li>
+                    <li><strong>Sustainable Computing:</strong> Focus on energy-efficient hardware and green data centers.</li>
+                </ul>
+                <p>The next decade will bring computing capabilities we can barely imagine today, fundamentally reshaping society, science, and human interaction.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="pythonModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('pythonModal')">&times;</button>
+            <h2 class="modal-title">Python - The King of Programming 2025</h2>
+            <div class="modal-content">
+                <h3>Why Python Dominates in 2025</h3>
+                <p>Python has solidified its position as the most popular programming language due to its unparalleled simplicity, vast versatility, and an incredibly rich ecosystem of libraries and frameworks. It's the undisputed go-to language for cutting-edge fields like Artificial Intelligence, Machine Learning, Data Science, and also remains a strong contender in web development and automation. Its gentle learning curve makes it perfect for beginners, while its powerful capabilities satisfy the demands of expert developers.</p>
+                
+                <h3>What Makes Python Special</h3>
+                <ul>
+                    <li><strong>Readable Syntax:</strong> Python's design philosophy emphasizes code readability, often described as looking like plain English. This reduces the cost of program maintenance and makes it easier for teams to collaborate.</li>
+                    <li><strong>Huge Library Ecosystem:</strong> With over 400,000 packages available on PyPI (Python Package Index), Python offers pre-built solutions for almost any task. This "batteries included" approach significantly speeds up development.</li>
+                    <li><strong>AI/ML Dominance:</strong> Libraries like TensorFlow, PyTorch, Keras, and scikit-learn have made Python the de facto language for AI and Machine Learning research and production.</li>
+                    <li><strong>Data Science Powerhouse:</strong> Pandas for data manipulation, NumPy for numerical computing, and Matplotlib/Seaborn for data visualization form the core of Python's data science capabilities.</li>
+                    <li><strong>Web Frameworks:</strong> Robust frameworks like Django (full-stack, batteries-included), Flask (micro-framework), and FastAPI (modern, high-performance API development) make Python a strong choice for web applications.</li>
+                    <li><strong>Automation & Scripting:</strong> Python's simplicity and extensive standard library make it ideal for writing scripts to automate repetitive tasks, system administration, and network programming.</li>
+                    <li><strong>Cross-Platform Compatibility:</strong> Python code can run on various operating systems (Windows, macOS, Linux) without modification, enhancing its utility.</li>
+                </ul>
+                
+                <h3>Career Opportunities in 2025</h3>
+                <p>Python developers are among the highest paid programmers globally, reflecting the high demand for their skills. Average salaries in 2025 range from <strong>$85,000 to $180,000+</strong> for experienced developers, with senior roles and specialized AI/ML engineers commanding even higher figures. There's particularly high demand in AI, fintech, healthcare, cloud computing, and major tech companies.</p>
+                
+                <h3>Best Way to Learn Python in 2025</h3>
+                <p>Start with the fundamental syntax and core concepts. Once comfortable, choose a specialization that interests you:</p>
+                <ul>
+                    <li><strong>Web Development:</strong> Dive into Django or Flask to build web applications.</li>
+                    <li><strong>Data Science:</strong> Master Pandas, NumPy, and data visualization libraries.</li>
+                    <li><strong>AI/Machine Learning:</strong> Explore TensorFlow or PyTorch and build predictive models.</li>
+                    <li><strong>Automation:</strong> Learn to write scripts for system tasks or web scraping.</li>
+                </ul>
+                <p>The key is to build real-world projects, contribute to open source, and continuously learn new libraries and best practices. Python's community is vast and supportive, offering abundant resources for learning and growth.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="javascriptModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('javascriptModal')">&times;</button>
+            <h2 class="modal-title">JavaScript - The Universal Language</h2>
+            <div class="modal-content">
+                <h3>JavaScript Everywhere in 2025</h3>
+                <p>JavaScript has undergone a remarkable transformation, evolving from a simple browser scripting language to the foundational technology for nearly all modern web development. In 2025, JavaScript runs literally everywhere: in web browsers (frontend), on servers (backend with Node.js), in mobile applications (React Native, Ionic), desktop applications (Electron, Tauri), and even embedded systems and IoT devices. It is an absolutely essential language for any developer looking to build modern, interactive applications.</p>
+                
+                <h3>Why JavaScript is Essential</h3>
+                <ul>
+                    <li><strong>Frontend Development:</strong> The undisputed king of client-side web development. Frameworks like React, Vue.js, and Angular enable building complex, single-page applications (SPAs) with rich user experiences.</li>
+                    <li><strong>Backend Development:</strong> Node.js allows JavaScript to run on the server, enabling full-stack development with a single language. Frameworks like Express.js, NestJS, and Fastify are popular for building robust APIs and microservices.</li>
+                    <li><strong>Mobile Apps:</strong> Frameworks like React Native and NativeScript allow developers to build truly native mobile applications for iOS and Android using JavaScript, significantly reducing development time and cost.</li>
+                    <li><strong>Desktop Apps:</strong> Electron and Tauri enable building cross-platform desktop applications using web technologies, making it easy to create apps like VS Code, Slack, and Discord.</li>
+                    <li><strong>Full-Stack Development:</strong> The ability to use JavaScript across the entire stack (frontend, backend, database interactions with MongoDB/Mongoose) streamlines development and allows developers to be highly versatile.</li>
+                    <li><strong>Vast Ecosystem:</strong> npm (Node Package Manager) is the largest software registry in the world, offering millions of packages and tools that accelerate development.</li>
+                </ul>
+                
+                <h3>Modern JavaScript Features (ES2025 and Beyond)</h3>
+                <p>The ECMAScript (ES) standard, which JavaScript adheres to, is continuously evolving. ES2025 brings new features like pattern matching, the Temporal API for advanced date/time handling, and further improvements to asynchronous programming with `async/await`. The language continues to prioritize developer experience, performance, and new paradigms like WebAssembly integration.</p>
+                
+                <h3>Career Path & Salary in 2025</h3>
+                <p>JavaScript developers have an abundance of career opportunities across various specializations:</p>
+                <ul>
+                    <li><strong>Frontend Developer:</strong> Focuses on UI/UX. Average salaries range from <strong>$70,000 to $150,000</strong>.</li>
+                    <li><strong>Backend Developer (Node.js):</strong> Builds server-side logic. Average salaries range from <strong>$80,000 to $160,000</strong>.</li>
+                    <li><strong>Full-Stack Developer:</strong> Handles both frontend and backend. Average salaries range from <strong>$80,000 to $180,000</strong>.</li>
+                    <li><strong>Mobile Developer (React Native):</strong> Specializes in mobile apps. Average salaries range from <strong>$85,000 to $170,000</strong>.</li>
+                    <li><strong>Senior JavaScript Architect/Lead:</strong> Highly experienced roles can command salaries of <strong>$200,000+</strong>.</li>
+                </ul>
+                <p>The demand for skilled JavaScript developers remains consistently high across all industries, making it a secure and lucrative career choice.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="typescriptModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('typescriptModal')">&times;</button>
+            <h2 class="modal-title">TypeScript - JavaScript with Superpowers</h2>
+            <div class="modal-content">
+                <h3>Why TypeScript is Taking Over</h3>
+                <p>TypeScript, developed by Microsoft, is a superset of JavaScript that adds optional static typing. This means you can define the types of your variables, function parameters, and return values, allowing for early detection of errors during development rather than at runtime. It compiles down to plain JavaScript, making it compatible with any JavaScript environment. In 2025, TypeScript is rapidly becoming the standard for large-scale applications, enterprise development, and any project where code reliability and maintainability are paramount.</p>
+                
+                <h3>Key Benefits of TypeScript</h3>
+                <ul>
+                    <li><strong>Type Safety:</strong> The primary benefit. TypeScript catches common programming errors (like passing a string where a number is expected) at compile time, significantly reducing bugs and improving code quality.</li>
+                    <li><strong>Better IDE Support:</strong> Modern Integrated Development Environments (IDEs) like VS Code offer unparalleled support for TypeScript, providing intelligent autocomplete, real-time error checking, powerful refactoring tools, and better navigation through large codebases.</li>
+                    <li><strong>Improved Code Maintainability:</strong> For large and complex projects, types act as documentation, making it easier for new developers to understand the codebase and for existing developers to refactor or extend features without introducing regressions.</li>
+                    <li><strong>Enhanced Collaboration:</strong> Explicit types make it clearer how different parts of a system interact, facilitating smoother collaboration among team members.</li>
+                    <li><strong>Modern JavaScript Features:</strong> TypeScript supports all the latest ECMAScript features, often even before they are fully standardized, allowing developers to use cutting-edge syntax while ensuring compatibility.</li>
+                    <li><strong>Scalability:</strong> Its type system makes it much easier to scale applications and teams, as the compiler helps enforce contracts between different modules and components.</li>
+                </ul>
+                
+                <h3>Industry Adoption & Use Cases</h3>
+                <p>Major tech companies like Microsoft, Google, Airbnb, Slack, and many others have adopted TypeScript for their critical applications. It's the preferred choice for popular JavaScript frameworks:</p>
+                <ul>
+                    <li><strong>Angular:</strong> Built entirely with TypeScript.</li>
+                    <li><strong>React:</strong> Widely used with TypeScript for new projects and large codebases.</li>
+                    <li><strong>Vue.js:</strong> Offers excellent TypeScript support.</li>
+                    <li><strong>Node.js Backends:</strong> Frameworks like NestJS leverage TypeScript for robust server-side development.</li>
+                </ul>
+                <p>TypeScript is particularly valuable in enterprise environments where long-term maintainability, team collaboration, and bug prevention are crucial. Its growing popularity ensures a strong job market for developers proficient in TypeScript.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="rustModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('rustModal')">&times;</button>
+            <h2 class="modal-title">Rust - The Future of Systems Programming</h2>
+            <div class="modal-content">
+                <h3>Why Rust is Revolutionary</h3>
+                <p>Rust is a multi-paradigm, compiled programming language developed by Mozilla. It's designed for performance and safety, especially memory safety, without relying on a garbage collector. This unique combination makes it ideal for systems programming where performance is critical and reliability is paramount. Rust's innovative "borrow checker" ensures memory safety at compile time, eliminating common bugs like null pointer dereferences, data races, and buffer overflows that plague languages like C and C++.</p>
+                
+                <h3>What Makes Rust Special</h3>
+                <ul>
+                    <li><strong>Memory Safety:</strong> Rust guarantees memory safety without a garbage collector, achieved through its ownership system and borrow checker. This prevents entire classes of bugs.</li>
+                    <li><strong>Zero-Cost Abstractions:</strong> Rust provides high-level programming constructs (like iterators and generics) that compile down to efficient, low-level code with no runtime overhead.</li>
+                    <li><strong>Concurrency:</strong> Rust's type system helps prevent data races and other concurrency bugs at compile time, enabling "fearless concurrency" where developers can write concurrent code with confidence.</li>
+                    <li><strong>Performance:</strong> As a compiled language, Rust offers performance comparable to C and C++, making it suitable for performance-critical applications.</li>
+                    <li><strong>Cross-Platform:</strong> Rust can compile to various platforms, including WebAssembly, making it versatile for different environments.</li>
+                    <li><strong>Growing Ecosystem:</strong> The Cargo package manager and a rapidly expanding ecosystem of libraries (crates) make development efficient and enjoyable.</li>
+                </ul>
+                
+                <h3>Use Cases & Industry Adoption</h3>
+                <p>Rust is rapidly gaining adoption in areas where performance, reliability, and security are critical:</p>
+                <ul>
+                    <li><strong>Operating Systems:</strong> Components of Linux kernel, Redox OS.</li>
+                    <li><strong>Web Browsers:</strong> Firefox's Servo engine components.</li>
+                    <li><strong>Game Engines:</strong> Used in parts of game development for performance.</li>
+                    <li><strong>Blockchain:</strong> Many new blockchain projects and cryptocurrencies are built with Rust due to its security and performance.</li>
+                    <li><strong>WebAssembly (Wasm):</strong> Rust is a primary language for compiling to WebAssembly, enabling high-performance code in web browsers.</li>
+                    <li><strong>Command-Line Tools:</strong> Building fast and reliable CLI tools.</li>
+                </ul>
+                <p>Companies like Mozilla, Dropbox, Discord, Cloudflare, and Microsoft are increasingly using Rust in production for critical infrastructure. While it has a steeper learning curve due to its strict compiler, the benefits in terms of reliability and performance make it a highly rewarding language to master in 2025.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="goModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('goModal')">&times;</button>
+            <h2 class="modal-title">Go (Golang) - Google's Cloud Language</h2>
+            <div class="modal-content">
+                <h3>Why Go Excels in Cloud Computing</h3>
+                <p>Go, often referred to as Golang, is an open-source programming language designed by Google. It was created to address the challenges of building large-scale, high-performance, and concurrent software systems, particularly in the context of cloud infrastructure and distributed systems. Go's simplicity, efficiency, and built-in concurrency features make it an ideal choice for modern backend services, microservices, and cloud-native applications.</p>
+                
+                <h3>Go's Strengths & Features</h3>
+                <ul>
+                    <li><strong>Simple Syntax:</strong> Go has a minimalist and opinionated syntax, making it easy to learn, read, and write. This simplicity contributes to faster development cycles and easier team collaboration.</li>
+                    <li><strong>Fast Compilation:</strong> Go compiles very quickly into a single, statically linked binary. This simplifies deployment and reduces dependency issues.</li>
+                    <li><strong>Built-in Concurrency:</strong> Go's most distinctive feature is its native support for concurrency through "goroutines" (lightweight threads) and "channels" (for communication between goroutines). This makes it incredibly efficient for handling many operations simultaneously.</li>
+                    <li><strong>Garbage Collection:</strong> While not as low-level as Rust, Go includes a garbage collector that manages memory automatically, simplifying development compared to manual memory management.</li>
+                    <li><strong>Strong Standard Library:</strong> Go comes with a comprehensive standard library that provides robust support for networking, cryptography, file I/O, and more, reducing the need for external dependencies.</li>
+                    <li><strong>Performance:</strong> Go offers excellent performance, often comparable to Java or C++, making it suitable for high-throughput services.</li>
+                </ul>
+                
+                <h3>Popular Go Projects & Use Cases</h3>
+                <p>Go is the language of choice for many critical infrastructure projects and cloud services:</p>
+                <ul>
+                    <li><strong>Docker:</strong> The leading containerization platform.</li>
+                    <li><strong>Kubernetes:</strong> The de facto standard for container orchestration.</li>
+                    <li><strong>Prometheus:</strong> A popular open-source monitoring system.</li>
+                    <li><strong>Grafana:</strong> Data visualization and analytics platform.</li>
+                    <li><strong>Cloud Services:</strong> Many components of Google Cloud, AWS, and other cloud providers are built with Go.</li>
+                    <li><strong>Microservices & APIs:</strong> Its concurrency model and performance make it ideal for building scalable backend services.</li>
+                    <li><strong>DevOps Tools:</strong> Go is frequently used for building command-line tools and utilities for DevOps.</li>
+                </ul>
+                <p>For developers interested in backend, cloud infrastructure, or DevOps roles, mastering Go is a highly valuable skill in 2025, with strong demand and competitive salaries.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="kotlinModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('kotlinModal')">&times;</button>
+            <h2 class="modal-title">Kotlin - Modern Android Development</h2>
+            <div class="modal-content">
+                <h3>Google's Preferred Android Language</h3>
+                <p>Kotlin is a modern, statically typed programming language developed by JetBrains. In 2019, Google announced Kotlin as its preferred language for Android app development, leading to its rapid adoption in the mobile ecosystem. Kotlin is designed to be concise, safe, and fully interoperable with Java, meaning developers can seamlessly use existing Java libraries and frameworks in Kotlin projects.</p>
+                
+                <h3>Kotlin Advantages</h3>
+                <ul>
+                    <li><strong>Null Safety:</strong> Kotlin's type system helps eliminate NullPointerExceptions, a common source of bugs in Java, by making nullability explicit.</li>
+                    <li><strong>Concise Syntax:</strong> Kotlin requires significantly less boilerplate code compared to Java, leading to more readable and maintainable codebases.</li>
+                    <li><strong>Java Interoperability:</strong> Kotlin is 100% interoperable with Java. You can call Java code from Kotlin and vice-versa, allowing for gradual migration of existing Java projects.</li>
+                    <li><strong>Coroutines:</strong> Kotlin provides built-in support for coroutines, a powerful feature for writing asynchronous and non-blocking code that is more readable and easier to manage than traditional callbacks or Futures.</li>
+                    <li><strong>Extension Functions:</strong> Allows adding new functionality to existing classes without inheriting from them or using design patterns like Decorator.</li>
+                    <li><strong>Data Classes:</strong> Simplifies the creation of classes primarily used to hold data, automatically generating `equals()`, `hashCode()`, `toString()`, and other utility functions.</li>
+                </ul>
+                
+                <h3>Beyond Android: Multiplatform Development</h3>
+                <p>While primarily known for Android, Kotlin is expanding into multiplatform development with Kotlin Multiplatform Mobile (KMM). KMM allows developers to share business logic, data models, and networking code between Android and iOS applications, significantly reducing development time and ensuring consistency across platforms. Kotlin is also used for:</p>
+                <ul>
+                    <li><strong>Backend Development:</strong> With frameworks like Ktor and Spring Boot (which supports Kotlin), it's a strong alternative to Java for server-side applications.</li>
+                    <li><strong>Web Development:</strong> Kotlin/JS allows compiling Kotlin code to JavaScript for frontend development.</li>
+                    <li><strong>Desktop Applications:</strong> With frameworks like Compose Multiplatform.</li>
+                </ul>
+                <p>Companies like Netflix, Pinterest, Uber, and Trello use Kotlin in production. For mobile developers or those looking for a modern, versatile language with strong industry backing, Kotlin is an excellent choice in 2025.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="vscodeModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('vscodeModal')">&times;</button>
+            <h2 class="modal-title">Visual Studio Code - The Developer's Choice</h2>
+            <div class="modal-content">
+                <h3>Why VS Code Dominates</h3>
+                <p>Visual Studio Code (VS Code), developed by Microsoft, has rapidly become the most popular code editor in the world, with over 70% market share among developers. Its success stems from being free, open-source, incredibly fast, lightweight, and highly extensible. It's not just an editor; it's a powerful integrated development environment (IDE) that supports a vast array of programming languages and workflows.</p>
+                
+                <h3>Essential Features that Empower Developers</h3>
+                <ul>
+                    <li><strong>IntelliSense:</strong> Provides smart code completion, parameter info, quick info, and member lists, making coding faster and reducing errors.</li>
+                    <li><strong>Integrated Terminal:</strong> A built-in command-line interface allows developers to run commands, build projects, and manage Git without leaving the editor.</li>
+                    <li><strong>Debugging:</strong> Powerful debugging capabilities with breakpoints, call stacks, and interactive consoles for various languages.</li>
+                    <li><strong>Git Integration:</strong> Seamless integration with Git for version control, allowing easy staging, committing, branching, and merging directly from the UI.</li>
+                    <li><strong>Extensions Marketplace:</strong> Thousands of extensions are available for virtually any language, framework, or tool, allowing developers to customize VS Code to their exact needs.</li>
+                    <li><strong>Live Share:</strong> A revolutionary feature that enables real-time collaborative coding, allowing multiple developers to edit, debug, and share terminals in a single session.</li>
+                    <li><strong>Remote Development:</strong> Extensions allow you to connect to remote machines (SSH), containers, or WSL (Windows Subsystem for Linux) and develop as if your code was local.</li>
+                    <li><strong>Multi-language Support:</strong> Out-of-the-box support for JavaScript, TypeScript, Node.js, and a rich ecosystem of extensions for Python, Java, C++, Go, PHP, and more.</li>
+                </ul>
+                
+                <h3>AI-Powered Coding in 2025</h3>
+                <p>With the rise of AI, VS Code has become a hub for AI-powered coding assistance. Extensions like GitHub Copilot, CodeWhisperer, and others provide intelligent code suggestions, generate entire functions, refactor code, and even help with debugging, significantly boosting developer productivity and accelerating learning.</p>
+                <p>VS Code's continuous innovation and strong community support ensure it remains the top choice for developers in 2025 and beyond.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="gitModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('gitModal')">&times;</button>
+            <h2 class="modal-title">Git & GitHub - Version Control & Collaboration</h2>
+            <div class="modal-content">
+                <h3>The Backbone of Modern Development</h3>
+                <p><strong>Git</strong> is a free and open-source distributed version control system (DVCS) designed to handle everything from small to very large projects with speed and efficiency. It allows developers to track changes in source code during software development, enabling multiple developers to work on the same project simultaneously without overwriting each other's work. <strong>GitHub</strong> is the leading web-based platform for hosting Git repositories, providing a collaborative environment for millions of developers worldwide.</p>
+                
+                <h3>Why Git is Essential for Every Developer</h3>
+                <ul>
+                    <li><strong>Version Tracking:</strong> Git keeps a complete history of every change made to the codebase, allowing developers to revert to previous versions, compare changes, and understand the evolution of the project.</li>
+                    <li><strong>Collaboration:</strong> Git's distributed nature allows teams to work on the same project concurrently. Developers can work on their local copies and then merge their changes, resolving conflicts efficiently.</li>
+                    <li><strong>Branching & Merging:</strong> Git's powerful branching model enables developers to create isolated environments (branches) for new features, bug fixes, or experiments without affecting the main codebase. These branches can then be seamlessly merged back.</li>
+                    <li><strong>Code Integrity:</strong> Git ensures the integrity of the codebase by tracking every commit with a unique hash, making it impossible to silently alter the history.</li>
+                    <li><strong>Offline Work:</strong> Since each developer has a full copy of the repository, they can work offline and commit changes, syncing with the remote repository later.</li>
+                </ul>
+                
+                <h3>GitHub Features that Enhance Collaboration</h3>
+                <p>GitHub extends Git's capabilities with a suite of features designed for team collaboration and project management:</p>
+                <ul>
+                    <li><strong>Pull Requests (PRs):</strong> A core GitHub feature that allows developers to propose changes, discuss them with team members, and get code reviewed before merging into the main branch.</li>
+                    <li><strong>Code Reviews:</strong> Facilitates peer review of code, improving code quality and knowledge sharing.</li>
+                    <li><strong>Issue Tracking:</strong> A built-in system to manage tasks, bugs, and feature requests.</li>
+                    <li><strong>GitHub Actions:</strong> A powerful CI/CD (Continuous Integration/Continuous Delivery) platform that automates build, test, and deployment workflows directly from the repository.</li>
+                    <li><strong>Project Management Tools:</strong> Boards, milestones, and graphs to visualize project progress.</li>
+                    <li><strong>Vast Open-Source Community:</strong> GitHub hosts millions of open-source projects, making it a hub for learning, contributing, and discovering new technologies.</li>
+                </ul>
+                <p>Mastering Git and GitHub is non-negotiable for any aspiring or professional developer in 2025, as it forms the foundation of modern software development workflows.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="dockerModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('dockerModal')">&times;</button>
+            <h2 class="modal-title">Docker - Containerization for Developers</h2>
+            <div class="modal-content">
+                <h3>Ship, Run, and Deploy Anywhere</h3>
+                <p>Docker is an open-source platform that uses OS-level virtualization to deliver software in packages called containers. Containers are lightweight, standalone, executable packages of software that include everything needed to run an application: code, runtime, system tools, system libraries, and settings. Docker has revolutionized how applications are developed, shipped, and run, solving the infamous "it works on my machine" problem.</p>
+                
+                <h3>Docker Benefits for Modern Development</h3>
+                <ul>
+                    <li><strong>Consistency Across Environments:</strong> Docker ensures that an application runs identically across development, testing, staging, and production environments, eliminating compatibility issues.</li>
+                    <li><strong>Isolation:</strong> Containers isolate applications from each other and from the underlying infrastructure, providing a clean and predictable environment for each application.</li>
+                    <li><strong>Portability:</strong> A Docker container can run on any machine that has Docker installed, regardless of the host operating system, making deployment incredibly flexible.</li>
+                    <li><strong>Efficiency:</strong> Containers are much lighter than virtual machines, sharing the host OS kernel. This means faster startup times, less resource consumption, and higher density of applications per server.</li>
+                    <li><strong>Scalability:</strong> Docker containers can be easily scaled up or down to meet demand, especially when combined with orchestration tools like Kubernetes.</li>
+                    <li><strong>Faster Development Cycles:</strong> Developers can quickly set up consistent development environments, onboard new team members, and test applications without complex configurations.</li>
+                    <li><strong>Simplified Deployment:</strong> Packaging applications into containers simplifies the deployment process, making it more reliable and repeatable.</li>
+                </ul>
+                
+                <h3>DevOps & Cloud-Native Architectures</h3>
+                <p>Docker is a cornerstone of modern DevOps practices and cloud-native architectures. It enables Continuous Integration (CI) by providing consistent build environments and Continuous Delivery/Deployment (CD) by simplifying the packaging and distribution of applications. When combined with container orchestration platforms like Kubernetes, Docker allows organizations to manage and scale complex microservices architectures with unprecedented efficiency.</p>
+                <p>Understanding Docker is crucial for any developer working in a modern, cloud-based, or microservices environment in 2025. It's a fundamental skill for building, deploying, and managing scalable applications.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="figmaModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('figmaModal')">&times;</button>
+            <h2 class="modal-title">Figma - Collaborative Design for the Web</h2>
+            <div class="modal-content">
+                <h3>Design, Prototype, and Collaborate</h3>
+                <p>Figma is the leading cloud-based design tool for user interface (UI) and user experience (UX) design, prototyping, and real-time collaboration. Unlike traditional desktop-based design software, Figma runs entirely in the browser, making it accessible from anywhere and enabling seamless teamwork. It has become an indispensable tool for design teams, product managers, and developers working together to create digital products.</p>
+                
+                <h3>Figma Features that Empower Design & Development</h3>
+                <ul>
+                    <li><strong>Real-time Collaboration:</strong> Multiple users can work on the same design file simultaneously, seeing each other's cursors and changes in real-time. This fosters unprecedented collaboration and reduces communication overhead.</li>
+                    <li><strong>Prototyping:</strong> Create interactive prototypes directly within Figma, simulating user flows and interactions. This allows designers and stakeholders to test user experiences before development begins.</li>
+                    <li><strong>Design Systems:</strong> Build and maintain reusable components, styles, and assets in a centralized design system. This ensures consistency across products and speeds up design and development.</li>
+                    <li><strong>Auto Layout:</strong> A powerful feature that allows designers to create responsive designs that automatically adjust to different screen sizes and content changes, simplifying the handoff to developers.</li>
+                    <li><strong>Plugins & Widgets:</strong> Extend Figma's functionality with a vast ecosystem of plugins and widgets for tasks like accessibility checks, data population, and code generation.</li>
+                    <li><strong>Version History:</strong> Figma automatically saves versions of your design, allowing you to revert to previous states and track changes.</li>
+                </ul>
+                
+                <h3>Seamless Developer Handoff</h3>
+                <p>Figma significantly streamlines the handoff process from design to development:</p>
+                <ul>
+                    <li><strong>Inspect Mode:</strong> Developers can inspect design elements directly in Figma to get CSS, iOS, or Android code snippets, measurements, and color values.</li>
+                    <li><strong>Asset Export:</strong> Easily export assets (icons, images) in various formats and resolutions.</li>
+                    <li><strong>Comments & Annotations:</strong> Designers can leave comments and annotations directly on the canvas, providing clear instructions and context for developers.</li>
+                    <li><strong>Shared Libraries:</strong> Developers can access and understand the design system components, ensuring consistent implementation.</li>
+                </ul>
+                <p>Figma's collaborative nature and developer-friendly features make it an essential tool for any modern product team aiming for efficient and high-quality UI/UX development in 2025.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="notionModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('notionModal')">&times;</button>
+            <h2 class="modal-title">Notion - All-in-One Workspace</h2>
+            <div class="modal-content">
+                <h3>Organize Your Life and Projects</h3>
+                <p>Notion is a versatile, all-in-one workspace that combines notes, databases, wikis, calendars, and project management tools into a single, highly customizable platform. It's designed to help individuals and teams organize their thoughts, manage projects, and centralize knowledge. Its flexible, block-based editor allows users to create almost any type of content, from simple notes to complex databases and interactive dashboards.</p>
+                
+                <h3>Notion for Developers: A Powerful Productivity Tool</h3>
+                <ul>
+                    <li><strong>Technical Documentation & Wikis:</strong> Create comprehensive documentation for APIs, codebases, system architectures, and onboarding guides. Build internal wikis for shared knowledge.</li>
+                    <li><strong>Project Management:</strong> Manage development sprints, track tasks, assign responsibilities, and visualize progress using Kanban boards, timelines, and tables. Integrate with GitHub for automated updates.</li>
+                    <li><strong>Knowledge Base:</strong> Centralize all project-related information, research, meeting notes, and design specifications in one accessible place.</li>
+                    <li><strong>Meeting Notes:</strong> Take structured meeting notes, assign action items, and link them directly to relevant tasks or documents.</li>
+                    <li><strong>Personal Productivity:</strong> Track personal goals, learning roadmaps, daily habits, and manage your to-do lists.</li>
+                    <li><strong>Bug Tracking:</strong> Set up simple bug tracking systems with custom properties for severity, status, and assignee.</li>
+                    <li><strong>Code Snippet Management:</strong> Store and organize frequently used code snippets with syntax highlighting.</li>
+                </ul>
+                
+                <h3>Customizable & Flexible</h3>
+                <p>Notion's strength lies in its extreme flexibility. Users can build custom workflows and systems using its diverse block types (text, images, code blocks, databases, embeds) and linking capabilities. This adaptability makes it suitable for a wide range of uses beyond just development, including content creation, HR, sales, and personal organization.</p>
+                <p>For developers, Notion serves as an invaluable tool for maintaining organization, improving communication within teams, and ensuring that all project-related information is easily accessible and up-to-date. It's a key component of a productive developer's toolkit in 2025.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="slackModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('slackModal')">&times;</button>
+            <h2 class="modal-title">Slack - Team Communication for Developers</h2>
+            <div class="modal-content">
+                <h3>Connect Your Team and Tools</h3>
+                <p>Slack is the leading team communication platform, widely adopted by development teams and businesses of all sizes. It offers a powerful, channel-based messaging system that allows teams to organize conversations by topic, project, or department. Beyond simple messaging, Slack integrates deeply with a vast ecosystem of development tools and services, making it a central hub for collaboration and workflow automation.</p>
+                
+                <h3>Slack Features Essential for Developers</h3>
+                <ul>
+                    <li><strong>Channels:</strong> Create dedicated channels for specific projects, features, bug reports, or even fun topics. This keeps conversations organized and easily searchable.</li>
+                    <li><strong>Direct Messaging & Huddles:</strong> Facilitate one-on-one or small group conversations, and use Huddles for quick audio/video calls.</li>
+                    <li><strong>File Sharing:</strong> Easily share code snippets (with syntax highlighting), images, documents, and other files directly within conversations.</li>
+                    <li><strong>Integrations:</strong> Connect Slack with your favorite development tools like GitHub, Jira, Jenkins, Asana, Google Drive, and more. Receive automated notifications for code commits, build failures, or new tickets.</li>
+                    <li><strong>Search Functionality:</strong> Powerful search allows you to quickly find past conversations, files, and shared knowledge, reducing information silos.</li>
+                    <li><strong>Customizable Notifications:</strong> Control how and when you receive alerts, ensuring you stay informed without being overwhelmed.</li>
+                    <li><strong>Apps & Bots:</strong> Extend Slack's functionality with custom bots and apps that can automate tasks, provide information, or integrate with internal systems.</li>
+                </ul>
+                <p>Slack plays a crucial role in modern agile development teams by:</p>
+                <ul>
+                    <li><strong>Improving Communication:</strong> Real-time messaging reduces email clutter and speeds up decision-making.</li>
+                    <li><strong>Facilitating Problem Solving:</strong> Teams can quickly discuss and troubleshoot issues, share logs, and get immediate feedback.</li>
+                    <li><strong>Enhancing Transparency:</strong> Project updates, discussions, and decisions are visible to relevant team members.</li>
+                    <li><strong>Automating Alerts:</strong> Receive instant notifications from CI/CD pipelines, monitoring tools, or error tracking systems.</li>
+                </ul>
+                <p>For any development team, Slack is an indispensable tool for fostering efficient communication, collaboration, and a cohesive workflow in 2025.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="linuxModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('linuxModal')">&times;</button>
+            <h2 class="modal-title">Linux - The Developer's Powerhouse</h2>
+            <div class="modal-content">
+                <h3>Why Linux is a Developer's Favorite</h3>
+                <p>Linux is an open-source, Unix-like operating system that is highly popular among developers, system administrators, and power users. Its flexibility, stability, security, and powerful command-line interface make it an ideal environment for software development, especially for web servers, cloud infrastructure, and open-source projects.</p>
+                
+                <h3>Key Advantages for Developers:</h3>
+                <ul>
+                    <li><strong>Open Source:</strong> Freedom to inspect, modify, and distribute the code. This fosters a massive community and a wealth of resources.</li>
+                    <li><strong>Command-Line Interface (CLI):</strong> Extremely powerful and efficient for automation, scripting, and managing development workflows. Tools like Bash, Zsh, and various utilities are native.</li>
+                    <li><strong>Development Tools:</strong> Excellent native support for programming languages (Python, Node.js, Go, Rust, C++, Java), compilers (GCC, Clang), and build systems (Make, CMake).</li>
+                    <li><strong>Server Environment:</strong> The vast majority of web servers and cloud infrastructure run on Linux, making it crucial for backend and DevOps engineers to be familiar with it.</li>
+                    <li><strong>Customization:</strong> Unparalleled ability to customize every aspect of the OS, from desktop environments (GNOME, KDE, XFCE) to kernel configurations.</li>
+                    <li><strong>Security:</strong> Generally considered more secure than other desktop OSes due to its permission model and active community patching vulnerabilities.</li>
+                    <li><strong>Package Managers:</strong> Efficient tools (APT, DNF, Pacman) for installing, updating, and managing software and dependencies.</li>
+                </ul>
+                
+                <h3>Popular Linux Distributions for Development:</h3>
+                <ul>
+                    <li><strong>Ubuntu:</strong> User-friendly, large community, excellent documentation. Great for beginners.</li>
+                    <li><strong>Fedora:</strong> Cutting-edge, stable, and backed by Red Hat. Good for developers who want newer technologies.</li>
+                    <li><strong>Debian:</strong> Highly stable, foundational for many other distros (like Ubuntu).</li>
+                    <li><strong>Arch Linux:</strong> A "rolling release" distribution known for its simplicity, minimalism, and user-centric approach. It's highly customizable and requires more manual configuration, making it popular among experienced users who want to build their system from the ground up. Its Pacman package manager and Arch User Repository (AUR) offer vast software availability.</li>
+                    <li><strong>Pop!_OS:</strong> Based on Ubuntu, optimized for developers and creators, with good NVIDIA support.</li>
+                </ul>
+                <p>While it might have a steeper learning curve for those new to the command line, mastering Linux provides developers with a powerful and flexible environment that mirrors production servers, making it an invaluable skill in 2025.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="windowsModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('windowsModal')">&times;</button>
+            <h2 class="modal-title">Windows - The Versatile Development Platform</h2>
+            <div class="modal-content">
+                <h3>Windows for Modern Development</h3>
+                <p>Windows remains the most widely used desktop operating system globally, and Microsoft has made significant strides to make it a powerful and versatile platform for developers. With the introduction of features like WSL (Windows Subsystem for Linux) and a growing ecosystem of development tools, Windows is now a strong contender for various programming tasks, especially for .NET, game development, and cross-platform applications.</p>
+                
+                <h3>Key Advantages for Developers:</h3>
+                <ul>
+                    <li><strong>Wide Software Compatibility:</strong> Access to a vast array of software, including popular IDEs (Visual Studio, VS Code), graphic design tools, and productivity applications.</li>
+                    <li><strong>Gaming Development:</strong> The primary platform for game development, with strong support for DirectX, Unity, and Unreal Engine.</li>
+                    <li><strong>.NET Ecosystem:</strong> Native and robust support for Microsoft's .NET framework, C#, and Azure cloud services.</li>
+                    <li><strong>Windows Subsystem for Linux (WSL):</strong> This revolutionary feature allows developers to run a full Linux environment (like Ubuntu, Debian, Arch) directly within Windows, providing access to Linux command-line tools, utilities, and applications without the overhead of a traditional virtual machine. This bridges the gap between Windows and Linux development.</li>
+                    <li><strong>User-Friendly Interface:</strong> A familiar graphical user interface (GUI) that is easy to navigate for most users.</li>
+                    <li><strong>Hardware Support:</strong> Broad compatibility with a wide range of hardware, peripherals, and drivers.</li>
+                </ul>
+                
+                <h3>Development on Windows with WSL:</h3>
+                <p>WSL has transformed Windows into a powerful development machine. Developers can:</p>
+                <ul>
+                    <li>Run Linux command-line tools and scripts.</li>
+                    <li>Use Linux-specific development environments (e.g., Node.js, Python, Ruby, Go, Rust toolchains).</li>
+                    <li>Access Linux file systems directly from Windows Explorer.</li>
+                    <li>Integrate seamlessly with VS Code for remote development into WSL.</li>
+                </ul>
+                <p>This combination makes Windows an excellent choice for developers who need the versatility of a desktop OS for daily tasks and gaming, while also requiring a robust Unix-like environment for coding and server-side development.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="macosModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('macosModal')">&times;</button>
+            <h2 class="modal-title">macOS - The Elegant Development Environment</h2>
+            <div class="modal-content">
+                <h3>macOS for Modern Development</h3>
+                <p>macOS, Apple's proprietary operating system, is a popular choice among developers, particularly in the web, mobile (iOS/macOS), and creative industries. Its Unix-based foundation provides a powerful command-line environment, while its elegant graphical user interface (GUI) and strong ecosystem of development tools offer a seamless and productive experience.</p>
+                
+                <h3>Key Advantages for Developers:</h3>
+                <ul>
+                    <li><strong>Unix-based Foundation:</strong> Provides a robust command-line environment similar to Linux, making it easy to use familiar tools like Bash, Zsh, Homebrew (package manager), and various developer utilities.</li>
+                    <li><strong>Elegant User Interface:</strong> A highly polished and intuitive GUI that enhances productivity and user experience.</li>
+                    <li><strong>iOS/macOS Development:</strong> The native platform for developing applications for Apple's ecosystem (iPhone, iPad, Mac) using Xcode, Swift, and Objective-C.</li>
+                    <li><strong>Strong Tooling Ecosystem:</strong> Excellent support for popular development tools, IDEs (VS Code, JetBrains IDEs), and frameworks across various languages.</li>
+                    <li><strong>Integration with Apple Ecosystem:</strong> Seamless integration with other Apple devices and services, beneficial for developers working within that ecosystem.</li>
+                    <li><strong>Performance & Stability:</strong> Known for its strong performance and stability, especially on Apple's M-series chips.</li>
+                </ul>
+                
+                <h3>Considerations for macOS Development:</h3>
+                <ul>
+                    <li><strong>Hardware Lock-in:</strong> macOS runs exclusively on Apple hardware, which can be more expensive than equivalent Windows or Linux machines.</li>
+                    <li><strong>Less Customization:</strong> While powerful, it offers less deep customization compared to Linux distributions.</li>
+                    <li><strong>Gaming:</strong> Generally not the primary choice for high-end PC gaming compared to Windows.</li>
+                </ul>
+                <p>For developers who value a premium user experience, a powerful Unix-like environment, and especially those involved in Apple ecosystem development, macOS remains a top-tier choice in 2025.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="frontendDevModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('frontendDevModal')">&times;</button>
+            <h2 class="modal-title">Frontend Developer - Crafting User Experiences</h2>
+            <div class="modal-content">
+                <h3>Role & Responsibilities</h3>
+                <p>A Frontend Developer is responsible for implementing the visual and interactive elements of a website or application that users directly interact with. They bridge the gap between design and technology, ensuring that the user interface (UI) is not only aesthetically pleasing but also highly functional, responsive, and provides an excellent user experience (UX).</p>
+                
+                <h3>Key Responsibilities:</h3>
+                <ul>
+                    <li>Translating UI/UX design wireframes and mockups into actual code.</li>
+                    <li>Developing new user-facing features using HTML, CSS, and JavaScript.</li>
+                    <li>Building reusable code and libraries for future use.</li>
+                    <li>Ensuring the technical feasibility of UI/UX designs.</li>
+                    <li>Optimizing applications for maximum speed and scalability.</li>
+                    <li>Collaborating with backend developers to integrate APIs.</li>
+                    <li>Conducting testing and debugging to ensure cross-browser compatibility and responsiveness.</li>
+                    <li>Staying up-to-date with emerging technologies and best practices.</li>
+                </ul>
+                
+                <h3>Essential Skills & Technologies in 2025:</h3>
+                <ul>
+                    <li><strong>Core Web Technologies:</strong> HTML5, CSS3 (with preprocessors like SASS/LESS), JavaScript (ES6+).</li>
+                    <li><strong>Frameworks & Libraries:</strong> Deep expertise in at least one major framework like React (most popular), Vue.js, or Angular.</li>
+                    <li><strong>State Management:</strong> Redux, Zustand, Vuex, NgRx.</li>
+                    <li><strong>Styling:</strong> Tailwind CSS, Styled Components, CSS Modules, Material-UI, Chakra UI.</li>
+                    <li><strong>Build Tools:</strong> Webpack, Vite, Parcel.</li>
+                    <li><strong>Version Control:</strong> Git & GitHub/GitLab/Bitbucket.</li>
+                    <li><strong>Responsive Design:</strong> Media queries, Flexbox, Grid.</li>
+                    <li><strong>Performance Optimization:</strong> Web Vitals, lazy loading, code splitting.</li>
+                    <li><strong>Testing:</strong> Jest, React Testing Library, Cypress.</li>
+                    <li><strong>UI/UX Principles:</strong> Understanding of usability, accessibility (WCAG), and design patterns.</li>
+                </ul>
+                
+                <h3>Career Progression & Salary Ranges (2025):</h3>
+                <ul>
+                    <li><strong>Junior Frontend Developer:</strong> Focus on learning and implementing basic features. <span class="salary-range">$60,000 - $90,000</span></li>
+                    <li><strong>Mid-Level Frontend Developer:</strong> Capable of building complex features independently, contributing to architecture. <span class="salary-range">$90,000 - $130,000</span></li>
+                    <li><strong>Senior Frontend Developer:</strong> Leads projects, mentors juniors, makes architectural decisions, deep expertise in performance and scalability. <span class="salary-range">$130,000 - $160,000+</span></li>
+                    <li><strong>Lead/Principal Frontend Engineer:</strong> Drives technical strategy, sets best practices, influences product direction. <span class="salary-range">$160,000 - $200,000+</span></li>
+                </ul>
+                <p>The demand for skilled Frontend Developers remains incredibly high as businesses continue to invest heavily in their digital presence and user experience. Continuous learning and adapting to new frameworks are key to a successful career in this dynamic field.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="backendDevModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('backendDevModal')">&times;</button>
+            <h2 class="modal-title">Backend Developer - Powering the Digital World</h2>
+            <div class="modal-content">
+                <h3>Role & Responsibilities</h3>
+                <p>A Backend Developer is responsible for building and maintaining the server-side of web applications, which includes databases, APIs, and the logic that powers the application's functionality. They work behind the scenes to ensure that data is stored, retrieved, and processed efficiently and securely, enabling the frontend to function seamlessly.</p>
+                
+                <h3>Key Responsibilities:</h3>
+                <ul>
+                    <li>Designing, building, and maintaining efficient, reusable, and reliable backend code.</li>
+                    <li>Developing and managing databases (SQL and NoSQL).</li>
+                    <li>Creating and integrating APIs (RESTful, GraphQL) for frontend communication.</li>
+                    <li>Implementing security and data protection measures.</li>
+                    <li>Optimizing application for maximum speed and scalability.</li>
+                    <li>Collaborating with frontend developers, DevOps engineers, and database administrators.</li>
+                    <li>Writing unit and integration tests for backend services.</li>
+                    <li>Managing hosting environments and cloud infrastructure.</li>
+                </ul>
+                
+                <h3>Essential Skills & Technologies in 2025:</h3>
+                <ul>
+                    <li><strong>Programming Languages:</strong> Proficiency in at least one backend language like Python (Django, Flask, FastAPI), Node.js (Express, NestJS), Go (Gin, Echo), Java (Spring Boot), C# (.NET), Ruby (Rails), or PHP (Laravel).</li>
+                    <li><strong>Databases:</strong>
+                        <ul>
+                            <li><strong>Relational (SQL):</strong> PostgreSQL, MySQL, SQL Server.</li>
+                            <li><strong>Non-Relational (NoSQL):</strong> MongoDB, Cassandra, Redis, DynamoDB.</li>
+                        </ul>
+                    </li>
+                    <li><strong>APIs:</strong> Designing and implementing RESTful APIs, understanding GraphQL.</li>
+                    <li><strong>Cloud Platforms:</strong> Experience with major cloud providers like AWS, Microsoft Azure, or Google Cloud Platform (GCP).</li>
+                    <li><strong>Version Control:</strong> Git & GitHub/GitLab/Bitbucket.</li>
+                    <li><strong>Containerization:</strong> Docker, Kubernetes (for orchestration).</li>
+                    <li><strong>Testing:</strong> Unit testing frameworks (e.g., Pytest, Jest, JUnit), integration testing.</li>
+                    <li><strong>Security:</strong> Understanding of common vulnerabilities (OWASP Top 10), authentication (OAuth, JWT), authorization.</li>
+                    <li><strong>Message Queues:</strong> Kafka, RabbitMQ (for distributed systems).</li>
+                </ul>
+                
+                <h3>Career Progression & Salary Ranges (2025):</h3>
+                <ul>
+                    <li><strong>Junior Backend Developer:</strong> Focus on implementing API endpoints, database interactions. <span class="salary-range">$65,000 - $95,000</span></li>
+                    <li><strong>Mid-Level Backend Developer:</strong> Designs and implements complex features, optimizes database queries, contributes to system architecture. <span class="salary-range">$95,000 - $140,000</span></li>
+                    <li><strong>Senior Backend Developer:</strong> Leads architectural design, mentors juniors, deep expertise in scalability, performance, and distributed systems. <span class="salary-range">$140,000 - $170,000+</span></li>
+                    <li><strong>Lead/Principal Backend Engineer:</strong> Drives technical vision, sets engineering standards, influences product roadmap. <span class="salary-range">$170,000 - $220,000+</span></li>
+                </ul>
+                <p>Backend Developers are critical for any robust application, and their skills are in constant high demand across all industries, especially with the growth of cloud computing and microservices architectures.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="fullstackDevModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('fullstackDevModal')">&times;</button>
+            <h2 class="modal-title">Full-Stack Developer - The Complete Builder</h2>
+            <div class="modal-content">
+                <h3>Role & Responsibilities</h3>
+                <p>A Full-Stack Developer is a versatile professional capable of working on both the frontend (client-side) and backend (server-side) of a web application. They possess a broad range of skills, allowing them to handle every aspect of development, from designing user interfaces to managing databases and server logic. This holistic understanding makes them invaluable, especially in startups or smaller teams where versatility is key.</p>
+                
+                <h3>Key Responsibilities:</h3>
+                <ul>
+                    <li>Designing and developing user interactions on websites.</li>
+                    <li>Developing APIs and backend services.</li>
+                    <li>Creating servers and databases for functionality.</li>
+                    <li>Ensuring cross-platform optimization for mobile phones.</li>
+                    <li>Ensuring responsiveness of applications.</li>
+                    <li>Working with graphic designers for web design features.</li>
+                    <li>Seeing through a project from conception to finished product.</li>
+                    <li>Designing and developing APIs.</li>
+                    <li>Meeting both technical and consumer needs.</li>
+                    <li>Staying abreast of developments in web applications and programming languages.</li>
+                </ul>
+                
+                <h3>Essential Skills & Technologies in 2025:</h3>
+                <p>A Full-Stack Developer needs a strong foundation in both frontend and backend technologies:</p>
+                <h4>Frontend Skills:</h4>
+                <ul>
+                    <li><strong>HTML5, CSS3, JavaScript (ES6+):</strong> Core building blocks.</li>
+                    <li><strong>Frontend Frameworks:</strong> React, Vue.js, or Angular.</li>
+                    <li><strong>Styling:</strong> Tailwind CSS, Styled Components.</li>
+                    <li><strong>Build Tools:</strong> Webpack, Vite.</li>
+                </ul>
+                <h4>Backend Skills:</h4>
+                <ul>
+                    <li><strong>Backend Languages/Frameworks:</strong> Node.js (Express, NestJS), Python (Django, Flask), Go, Java (Spring Boot), PHP (Laravel), or Ruby (Rails).</li>
+                    <li><strong>Databases:</strong> SQL (PostgreSQL, MySQL) and NoSQL (MongoDB, Redis).</li>
+                    <li><strong>APIs:</strong> RESTful and GraphQL API design and implementation.</li>
+                </ul>
+                <h4>General Skills:</h4>
+                <ul>
+                    <li><strong>Version Control:</strong> Git & GitHub.</li>
+                    <li><strong>Cloud Platforms:</strong> AWS, Azure, or GCP basics.</li>
+                    <li><strong>Containerization:</strong> Docker.</li>
+                    <li><strong>DevOps Basics:</strong> Understanding of CI/CD pipelines.</li>
+                    <li><strong>Problem Solving & Debugging:</strong> Ability to troubleshoot issues across the entire stack.</li>
+                    <li><strong>Architectural Understanding:</strong> Knowledge of how different components interact.</li>
+                </ul>
+                
+                <h3>Career Progression & Salary Ranges (2025):</h3>
+                <ul>
+                    <li><strong>Junior Full-Stack Developer:</strong> Focus on learning and contributing to both ends of the stack. <span class="salary-range">$70,000 - $100,000</span></li>
+                    <li><strong>Mid-Level Full-Stack Developer:</strong> Capable of building features end-to-end, optimizing performance. <span class="salary-range">$100,000 - $150,000</span></li>
+                    <li><strong>Senior Full-Stack Developer:</strong> Leads development efforts, designs system architecture, mentors team members. <span class="salary-range">$150,000 - $190,000+</span></li>
+                    <li><strong>Lead/Principal Full-Stack Engineer:</strong> Drives technical strategy, responsible for overall system design and scalability. <span class="salary-range">$190,000 - $250,000+</span></li>
+                </ul>
+                <p>Full-Stack Developers are highly sought after for their versatility and ability to understand the entire application lifecycle. While demanding, it offers a comprehensive understanding of software development and excellent career prospects.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="aiHealthAssistantModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('aiHealthAssistantModal')">&times;</button>
+            <h2 class="modal-title">AI-Powered Health Assistant</h2>
+            <div class="modal-content">
+                <h3>Problem Solved:</h3>
+                <p>Many individuals struggle with managing their health proactively, understanding symptoms, and adhering to medication schedules. Existing health apps often lack personalization and intelligent advice.</p>
+                <h3>Project Idea:</h3>
+                <p>Develop a mobile application that acts as a personalized AI health assistant. Users can input symptoms, receive preliminary (non-diagnostic) insights, get personalized health recommendations based on their profile (age, gender, existing conditions), and receive smart reminders for medication, exercise, and hydration. It could integrate with wearable devices for real-time data.</p>
+                <h3>Key Technologies:</h3>
+                <ul>
+                    <li><strong>Frontend:</strong> React Native / Flutter (for cross-platform mobile)</li>
+                    <li><strong>Backend:</strong> Python (Flask/FastAPI) or Node.js (Express)</li>
+                    <li><strong>AI/ML:</strong> TensorFlow/PyTorch for natural language processing (NLP) for symptom analysis, recommendation engines.</li>
+                    <li><strong>Database:</strong> PostgreSQL / MongoDB</li>
+                    <li><strong>Cloud:</strong> AWS / Google Cloud (for scalable AI services and data storage)</li>
+                    <li><strong>APIs:</strong> Integration with health APIs (e.g., for drug information, exercise data)</li>
+                </ul>
+                <h3>Potential Impact:</h3>
+                <p>Empower individuals to take more control over their health, improve adherence to health plans, and provide accessible, personalized health information, potentially reducing healthcare burdens.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="sustainableSupplyChainModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('sustainableSupplyChainModal')">&times;</button>
+            <h2 class="modal-title">Blockchain for Sustainable Supply Chains</h2>
+            <div class="modal-content">
+                <h3>Problem Solved:</h3>
+                <p>Consumers and businesses increasingly demand transparency and ethical practices in supply chains, but verifying claims of sustainability, fair labor, and origin is often difficult due to fragmented data and lack of trust.</p>
+                <h3>Project Idea:</h3>
+                <p>Create a blockchain-based platform that provides immutable and transparent records of a product's journey from raw material to consumer. Each step in the supply chain (sourcing, manufacturing, shipping) would be recorded on the blockchain, allowing consumers to scan a QR code on a product and see its complete, verified history, including environmental certifications and labor practices.</p>
+                <h3>Key Technologies:</h3>
+                <ul>
+                    <li><strong>Blockchain:</strong> Ethereum (for smart contracts), Hyperledger Fabric (for enterprise solutions), or Solana.</li>
+                    <li><strong>Frontend:</strong> React / Vue.js (for web interface) or React Native / Flutter (for mobile scanning app).</li>
+                    <li><strong>Backend:</strong> Node.js / Go (for API interaction with blockchain nodes).</li>
+                    <li><strong>Database:</strong> IPFS (for decentralized file storage of documents/certifications), traditional database for off-chain data.</li>
+                    <li><strong>Smart Contracts:</strong> Solidity (for Ethereum).</li>
+                </ul>
+                <h3>Potential Impact:</h3>
+                <p>Increase consumer trust, incentivize sustainable and ethical practices among businesses, reduce fraud, and provide verifiable data for regulatory compliance and impact reporting.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="smartCityDashboardModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('smartCityDashboardModal')">&times;</button>
+            <h2 class="modal-title">Smart City Data Dashboard</h2>
+            <div class="modal-content">
+                <h3>Problem Solved:</h3>
+                <p>Urban areas generate vast amounts of data from IoT sensors (traffic, air quality, waste management, energy usage), but this data is often siloed and not effectively utilized by city planners or citizens for informed decision-making.</p>
+                <h3>Project Idea:</h3>
+                <p>Develop an interactive, real-time dashboard that aggregates and visualizes various smart city data streams. It would provide insights into traffic congestion, air pollution levels, public transport efficiency, energy usage patterns, and waste collection schedules. Features could include predictive analytics for traffic, alerts for high pollution, and tools for citizens to report issues.</p>
+                <h3>Key Technologies:</h3>
+                <ul>
+                    <li><strong>Frontend:</strong> React / Vue.js (for interactive dashboard), D3.js / Chart.js (for data visualization).</li>
+                    <li><strong>Backend:</strong> Python (Django/FastAPI) or Node.js (NestJS) for data ingestion and API.</li>
+                    <li><strong>Database:</strong> Time-series database (InfluxDB, TimescaleDB) for IoT data, PostgreSQL for relational data.</li>
+                    <li><strong>Data Streaming:</strong> Kafka / RabbitMQ (for real-time data processing).</li>
+                    <li><strong>Cloud:</strong> AWS IoT Core / Google Cloud IoT (for managing sensor data).</li>
+                    <li><strong>Mapping:</strong> Mapbox / Leaflet.js for geographical data visualization.</li>
+                </ul>
+                <h3>Potential Impact:</h3>
+                <p>Improve urban planning efficiency, enhance public services, promote environmental sustainability, and empower citizens with real-time information to make better daily decisions.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="personalizedLearningModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('personalizedLearningModal')">&times;</button>
+            <h2 class="modal-title">Adaptive Learning Platform</h2>
+            <div class="modal-content">
+                <h3>Problem Solved:</h3>
+                <p>Traditional education often follows a one-size-fits-all approach, failing to cater to diverse learning styles, paces, and knowledge gaps of individual students. This can lead to disengagement and inefficient learning outcomes.</p>
+                <h3>Project Idea:</h3>
+                <p>Build an AI-driven adaptive learning platform that dynamically adjusts educational content, exercises, and assessments based on a student's real-time performance, learning style, and cognitive strengths. It would identify areas where a student struggles and provide targeted resources, while accelerating through concepts already mastered. Features could include AI tutors, personalized learning paths, and progress analytics.</p>
+                <h3>Key Technologies:</h3>
+                <ul>
+                    <li><strong>Frontend:</strong> React / Next.js (for web), React Native / Flutter (for mobile).</li>
+                    <li><strong>Backend:</strong> Python (Django/FastAPI) for AI integration and content delivery.</li>
+                    <li><strong>AI/ML:</strong> Reinforcement Learning for adaptive pathways, NLP for content analysis, knowledge tracing models.</li>
+                    <li><strong>Database:</strong> PostgreSQL / MongoDB (for user profiles, progress, content).</li>
+                    <li><strong>Cloud:</strong> AWS SageMaker / Google AI Platform (for ML model deployment).</li>
+                    <li><strong>Content Management:</strong> Headless CMS for educational content.</li>
+                </ul>
+                <h3>Potential Impact:</h3>
+                <p>Revolutionize education by making it truly personalized, improving learning efficiency, boosting student engagement, and ensuring better mastery of subjects for a wider range of learners.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="decentralizedSocialModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('decentralizedSocialModal')">&times;</button>
+            <h2 class="modal-title">Decentralized Social Network</h2>
+            <div class="modal-content">
+                <h3>Problem Solved:</h3>
+                <p>Centralized social media platforms often raise concerns about data privacy, censorship, algorithmic manipulation, and lack of user control over their own content and data. Users are often the product, not the customer.</p>
+                <h3>Project Idea:</h3>
+                <p>Develop a social media platform built on decentralized technologies (Web3). Users would own their data, control their identity, and have a say in platform governance. Content would be stored on decentralized file systems (like IPFS), and user interactions could be managed via smart contracts. Features could include encrypted messaging, token-gated communities, and content monetization directly by creators.</p>
+                <h3>Key Technologies:</h3>
+                <ul>
+                    <li><strong>Blockchain:</strong> Ethereum (for identity and smart contracts), Polygon/Arbitrum (for scalability).</li>
+                    <li><strong>Decentralized Storage:</strong> IPFS (InterPlanetary File System), Filecoin.</li>
+                    <li><strong>Frontend:</strong> React / Next.js (with Web3 libraries like Ethers.js, Web3.js).</li>
+                    <li><strong>Backend:</strong> Minimal backend, primarily interacting with blockchain nodes and decentralized storage.</li>
+                    <li><strong>Identity:</strong> Decentralized Identifiers (DIDs), Wallet Connect.</li>
+                    <li><strong>Smart Contracts:</strong> Solidity.</li>
+                </ul>
+                <h3>Potential Impact:</h3>
+                <p>Restore user privacy and control, foster more open and censorship-resistant communication, enable new models for content creation and monetization, and build more equitable online communities.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="climateActionPlatformModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('climateActionPlatformModal')">&times;</button>
+            <h2 class="modal-title">Gamified Climate Action Platform</h2>
+            <div class="modal-content">
+                <h3>Problem Solved:</h3>
+                <p>Climate change is a global crisis, but individual actions often feel insignificant, leading to apathy. There's a need to make sustainable living engaging, measurable, and community-driven.</p>
+                <h3>Project Idea:</h3>
+                <p>Create a mobile application that gamifies sustainable behaviors. Users would track their eco-friendly actions (e.g., reducing waste, using public transport, conserving energy), earn points, unlock badges, and compete with friends or communities. The app could provide personalized tips, calculate individual carbon footprints, and connect users with local environmental initiatives or volunteer opportunities. Features could include challenges, leaderboards, and educational content.</p>
+                <h3>Key Technologies:</h3>
+                <ul>
+                    <li><strong>Frontend:</strong> React Native / Flutter (for mobile app).</li>
+                    <li><strong>Backend:</strong> Node.js (NestJS) or Python (Django/FastAPI) for user management, gamification logic, and data processing.</li>
+                    <li><strong>Database:</strong> PostgreSQL / MongoDB (for user data, achievements, environmental impact data).</li>
+                    <li><strong>APIs:</strong> Integration with public transport APIs, energy consumption APIs, or local environmental data.</li>
+                    <li><strong>Data Visualization:</strong> Libraries for charting and progress tracking.</li>
+                    <li><strong>Community Features:</strong> Real-time chat, forums.</li>
+                </ul>
+                <h3>Potential Impact:</h3>
+                <p>Motivate individuals to adopt more sustainable lifestyles, raise awareness about environmental issues, foster community engagement in climate action, and contribute to measurable reductions in carbon footprint.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="timelineInfoModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('timelineInfoModal')">&times;</button>
+            <h2 class="modal-title" id="timelineInfoModalTitle"></h2>
+            <div class="modal-content" id="timelineInfoModalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // ===== SMOOTH SCROLLING =====
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ===== TERMINAL LOGIC =====
+        let terminalInput = document.getElementById('terminalInput');
+        const terminalBody = document.getElementById('terminalBody');
+        let commandHistory = [];
+        let historyIndex = -1;
+
+        const commands = {
+            help: `Available commands:
+  about      - Learn about this hub
+  skills     - My core skills
+  languages  - Top programming languages
+  tools      - Essential software & tools
+  os         - Operating Systems for Devs
+  careers    - Explore developer career paths
+  projects   - Ideas for projects the world needs
+  clear      - Clear the terminal
+  date       - Display current date and time
+  whoami     - Display current user
+  ls         - List directory contents
+  pwd        - Print working directory
+  echo [text]- Echo back the provided text`,
+            about: `Welcome to Programming Hub 2025!
+This interactive platform is designed to be your ultimate guide to the world of modern programming. Explore computer history, master trending languages, discover essential tools, and stay updated with the latest in tech.`,
+            skills: `My core skills include:
+  - Web Development (Frontend & Backend)
+  - AI/Machine Learning
+  - Data Science & Analytics
+  - Cloud Computing (AWS, Azure, GCP)
+  - DevOps & Containerization
+  - Mobile App Development
+  - Software Architecture & Design`,
+            languages: `Top Programming Languages in 2025:
+  - Python (AI/ML, Data Science)
+  - JavaScript (Web, Full-Stack)
+  - TypeScript (Enterprise JS)
+  - Rust (Systems, Performance)
+  - Go (Cloud Native, Microservices)
+  - Kotlin (Android, Multiplatform)
+  - Java (Enterprise, Android)
+  - C++ (Game Dev, Systems)
+  - C# (.NET, Game Dev)`,
+            tools: `Essential Software & Tools:
+  - Visual Studio Code (Code Editor)
+  - Git & GitHub (Version Control)
+  - Docker (Containerization)
+  - Figma (Design)
+  - Notion (Productivity)
+  - Slack (Communication)
+  - Kubernetes (Orchestration)
+  - Jira (Project Management)
+  - Postman (API Testing)`,
+            os: `Operating Systems for Developers:
+  - Linux (Arch, Ubuntu, Fedora)
+  - Windows (with WSL)
+  - macOS`,
+            careers: `Developer Career Paths:
+  - Frontend Developer (UI/UX)
+  - Backend Developer (Server-side, Databases)
+  - Full-Stack Developer (End-to-end)
+  - DevOps Engineer (Infrastructure, Automation)
+  - Data Scientist (Analysis, ML Models)
+  - AI/ML Engineer (AI Systems, Algorithms)
+  - Mobile Developer (iOS/Android)`,
+            projects: `Ideas for Projects the World Needs:
+  - AI-Powered Health Assistant
+  - Blockchain for Sustainable Supply Chains
+  - Smart City Data Dashboard
+  - Adaptive Learning Platform
+  - Decentralized Social Network
+  - Gamified Climate Action Platform`,
+            date: new Date().toLocaleString(),
+            whoami: 'programmer@hub2025',
+            ls: `index.html  modern-interactive-programming-hub.html  README.md  style.css  script.js  themes.css`,
+            pwd: '/home/programmer/hub2025',
+            echo: (args) => args.join(' ') || 'Echo what?',
+        };
+
+        function handleTerminalInput(event) {
+            if (event.key === 'Enter') {
+                const command = terminalInput.value.trim();
+                if (command === '') {
+                    addOutputLine('');
+                    return;
+                }
+                addCommandToHistory(command);
+                processCommand(command);
+                terminalInput.value = '';
+                terminalBody.scrollTop = terminalBody.scrollHeight; // Scroll to bottom
+            } else if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    terminalInput.value = commandHistory[historyIndex];
+                }
+            } else if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    terminalInput.value = commandHistory[historyIndex];
+                } else {
+                    historyIndex = -1;
+                    terminalInput.value = '';
+                }
+            }
+        }
+
+        function addCommandToHistory(command) {
+            commandHistory.unshift(command);
+            historyIndex = -1; // Reset history index after new command
+        }
+
+        function addOutputLine(text, isCommand = false) {
+            const lineDiv = document.createElement('div');
+            lineDiv.classList.add('terminal-line');
+
+            if (isCommand) {
+                lineDiv.innerHTML = `<span class="terminal-prompt">$</span> <span class="terminal-command">${text}</span>`;
+            } else {
+                lineDiv.innerHTML = `<div class="terminal-output">${text}</div>`;
+            }
+            terminalBody.insertBefore(lineDiv, terminalInput.parentNode);
+        }
+
+        function processCommand(command) {
+            addOutputLine(command, true); // Display the command typed by user
+
+            const parts = command.split(' ');
+            const cmd = parts[0].toLowerCase();
+            const args = parts.slice(1);
+
+            if (cmd === 'clear') {
+                terminalBody.innerHTML = `
+                    <div class="terminal-input-line">
+                        <span class="terminal-prompt">$</span>
+                        <input type="text" class="terminal-input" id="terminalInput" placeholder="Type a command..." autocomplete="off">
+                        <span class="cursor"></span>
+                    </div>
+                `;
+                // Re-attach event listener to the new input element
+                const newTerminalInput = terminalBody.querySelector('#terminalInput');
+                newTerminalInput.addEventListener('keydown', handleTerminalInput);
+                terminalInput = newTerminalInput; // Update the global terminalInput reference
+                terminalInput.focus(); // Focus the new input
+                return;
+            }
+
+            let output = 'Command not found. Type "help" for a list of commands.';
+            if (commands[cmd]) {
+                if (typeof commands[cmd] === 'function') {
+                    output = commands[cmd](args);
+                } else {
+                    output = commands[cmd];
+                }
+            }
+            addOutputLine(output);
+        }
+
+        // Re-attach the event listener to the terminalInput after the initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            terminalInput = document.getElementById('terminalInput'); // Ensure terminalInput is correctly referenced
+            if (terminalInput) {
+                terminalInput.addEventListener('keydown', handleTerminalInput);
+                terminalInput.focus();
+            }
+        });
+
+
+        // ===== MODAL LOGIC =====
+        function openModal(modalId) {
+            const modalOverlay = document.getElementById(modalId);
+            if (modalOverlay) {
+                modalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling background
+            }
+        }
+
+        function closeModal(modalId) {
+            const modalOverlay = document.getElementById(modalId);
+            if (modalOverlay) {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        }
+
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(event) {
+                if (event.target === overlay) {
+                    closeModal(overlay.id);
+                }
+            });
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(overlay => {
+                    closeModal(overlay.id);
+                });
+            }
+        });
+
+        // Function to show specific timeline info in a modal
+        function showTimelineInfo(title, description) {
+            const modalOverlay = document.getElementById('timelineInfoModal');
+            if (!modalOverlay) {
+                // This part should ideally not be reached if the modal is pre-defined in HTML
+                console.error("Timeline info modal not found!");
+                return;
+            }
+
+            document.getElementById('timelineInfoModalTitle').innerText = title;
+            document.getElementById('timelineInfoModalContent').innerText = description;
+            openModal('timelineInfoModal');
+        }
+
+        // ===== SCROLL ANIMATIONS =====
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
