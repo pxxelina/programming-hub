@@ -15,4 +15,11 @@
 ╬═╬/▌
 ╬═╬/  \
 
-.```
+```
+
+<h1 align="center">Programming Hub Screenshot</h1>
+
+<p align="center">
+  <img src="./program-hub.png" alt="Programming Hub Screenshot" width="700">
+</p>
+
